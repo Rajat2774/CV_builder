@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5 text-center candidates-details">
+                <div>
+                    <h1>Welcome, {{ current_user.username }}</h1><br>
+                    <button onclick="window.location.href='/logout'">Logout</button><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

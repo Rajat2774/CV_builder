@@ -1,0 +1,51 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5 text-center candidates-details">
+                <h1>Register</h1>
+                <form action="{{ url_for('register') }}" method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br>
+                    <button type="submit">Register</button>
+                </form>
+                <!-- Display error message if it exists -->
+                {% with messages = get_flashed_messages() %} {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                    <li class="flash-message">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %} {% endwith %}
+                <p>Already have an account? <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript to hide flash messages after 4 seconds -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all flash messages and hide them after 4 seconds
+            var flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 4000); // Adjusted timeout to 4 seconds
+            });
+        });
+    </script>
+</body>
+
+</html>
