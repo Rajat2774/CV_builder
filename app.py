@@ -118,6 +118,23 @@ class Education(db.Model):
     School=db.Column(db.String(255),nullable=False)
     FieldofStudy=db.Column(db.String(255),nullable=False)
     Grad_date=db.Column(db.Date,nullable=True)
+
+class Experience(db.Model):
+    ExpID=db.column(db.Integer,primary_key=True)
+    UserID=db.column(db.Integer,db.ForeignKey('users.UserID'),nullable=False)
+    title=db.column(db.String(255),nullable=False)
+    company=db.Column(db.String(255),nullable =False)
+    Location=db.Column(db.String(255),nullable=False)
+    StartDate=db.Column(db.Date,nullable=False)
+    EndDate=db.Column(db.Date,nullable=False)
+    Desc=db.Column(db.String(255),nullable=False)
+
+class Skills(db.Model):
+    SkillID=db.Column(db.Integer,primary_key=True)
+    UserID=db.Column(db.Integer,db.ForeignKey("users.UserID"),nullable=False)
+    Skillname=db.Column(db.String(255),nullable=False)
+    proficiency=db.Column(db.String(255),nullable=False)
+
     
 if __name__ == '__main__':
     with app.app_context():

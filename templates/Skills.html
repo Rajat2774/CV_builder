@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Entry Form</title>
+</head>
+
+<body>
+    <h2>Add Skills</h2>
+    <form action="/add_skill" method="post">
+        <label for="skill_name">Skill Name:</label><br>
+        <input type="text" id="skill_name" name="skill_name" required><br>
+
+        <label for="proficiency_level">Proficiency Level:</label><br>
+        <select id="proficiency_level" name="proficiency_level" required>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select><br>
+
+        <input type="submit" value="Add Skill">
+    </form>
+</body>
+
+</html>
