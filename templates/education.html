@@ -9,21 +9,49 @@
 
 <body>
     <h2>Education Details</h2>
-    <form action="/submit_education" method="post">
-        <label for="degree">Degree:</label><br>
-        <input type="text" id="degree" name="degree" required><br>
+    <form id="educationForm" action="/submit_education" method="post">
+        <div id="educationFields">
+            <div class="educationField">
+                <label for="degree">Degree:</label><br>
+                <input type="text" name="degree" required><br>
 
-        <label for="school">School:</label><br>
-        <input type="text" id="school" name="school" required><br>
+                <label for="school">School:</label><br>
+                <input type="text" name="school" required><br>
 
-        <label for="field_of_study">Field of Study:</label><br>
-        <input type="text" id="field_of_study" name="field_of_study" required><br>
+                <label for="field_of_study">Field of Study:</label><br>
+                <input type="text" name="field_of_study" required><br>
 
-        <label for="graduation_date">Graduation Date:</label><br>
-        <input type="date" id="graduation_date" name="graduation_date" required><br>
+                <label for="graduation_date">Graduation Date:</label><br>
+                <input type="date" name="graduation_date" required><br>
+            </div>
+        </div>
+
+        <button type="button" id="addEducation">Add More</button><br>
 
         <input type="submit" value="Submit">
     </form>
+
+    <script>
+        document.getElementById('addEducation').addEventListener('click', function() {
+            var educationFields = document.getElementById('educationFields');
+            var newField = document.createElement('div');
+            newField.className = 'educationField';
+            newField.innerHTML = `
+                <label for="degree">Degree:</label><br>
+                <input type="text" name="degree" required><br>
+
+                <label for="school">School:</label><br>
+                <input type="text" name="school" required><br>
+
+                <label for="field_of_study">Field of Study:</label><br>
+                <input type="text" name="field_of_study" required><br>
+
+                <label for="graduation_date">Graduation Date:</label><br>
+                <input type="date" name="graduation_date" required><br>
+            `;
+            educationFields.appendChild(newField);
+        });
+    </script>
 </body>
 
 </html>

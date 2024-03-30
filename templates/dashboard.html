@@ -9,14 +9,15 @@
 
 <body>
     <div class="heading">
-        <h1>Dashboard</h1>
     </div>
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-5 text-center candidates-details">
                 <div>
-                    <h1>Welcome, {{ current_user.username }}</h1><br>
+                    <h1>Welcome, to CV Builder {{ current_user.username }}</h1><br>
                     <button onclick="window.location.href='/logout'">Logout</button><br><br>
+                    <button onclick="window.location.href='/create_cv'">Create CV</button><br><br>
+                    <button onclick="window.location.href='/view_cvs'">View CVs</button><br><br>
                 </div>
             </div>
         </div>
