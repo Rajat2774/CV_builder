@@ -5,31 +5,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Experience Details Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Custom Styles */
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .add-experience {
+            margin-top: 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Experience Details</h2>
-    <form action="/submit_experience" method="post">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required><br>
+    <div class="container">
+        <h2>Experience Details</h2>
+        <form id="experienceForm" action="/submit_experience" method="post">
+            <div id="experienceFields">
+                <div class="experienceField">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" required>
 
-        <label for="company">Company:</label><br>
-        <input type="text" id="company" name="company" required><br>
+                    <label for="company">Company:</label>
+                    <input type="text" name="company" required>
 
-        <label for="location">Location:</label><br>
-        <input type="text" id="location" name="location"><br>
+                    <label for="location">Location:</label>
+                    <input type="text" name="location">
 
-        <label for="start_date">Start Date:</label><br>
-        <input type="date" id="start_date" name="start_date" required><br>
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" required>
 
-        <label for="end_date">End Date:</label><br>
-        <input type="date" id="end_date" name="end_date"><br>
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date" id="end_date">
 
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+                    <input type="checkbox" id="current_job" name="current_job" value="yes">
+                    <label for="current_job">Current Job</label>
 
-        <input type="submit" value="Submit">
-    </form>
+                    <label for="description">Description:</label>
+                    <textarea name="description" rows="4" cols="50"></textarea>
+
+                    <div class="checkbox-group">
+                        <h4>Select Skills:</h4>
+                        {% for skill in skills %}
+                        <label><input type="checkbox" name="selected_skills[]" value="{{ skill.SkillID }}"> {{ skill.skill_name }}</label> {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+            <button type="button" class="add-experience">Add More Experience</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('.add-experience').addEventListener('click', function() {
+            var experienceFields = document.getElementById('experienceFields');
+            var newField = document.createElement('div');
+            newField.className = 'experienceField';
+            newField.innerHTML = `
+                <label for="title">Title:</label>
+                <input type="text" name="title" required>
+
+                <label for="company">Company:</label>
+                <input type="text" name="company" required>
+
+                <label for="location">Location:</label>
+                <input type="text" name="location">
+
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" required>
+
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" id="end_date">
+
+                <input type="checkbox" id="current_job" name="current_job" value="yes">
+                <label for="current_job">Current Job</label>
+
+                <label for="description">Description:</label>
+                <textarea name="description" rows="4" cols="50"></textarea>
+
+                <div class="checkbox-group">
+                    <h4>Select Skills:</h4>
+                    {% for skill in skills %}
+                    <label><input type="checkbox" name="selected_skills[]" value="{{ skill.SkillID }}"> {{ skill.skill_name }}</label> {% endfor %}
+                </div>
+            `;
+            experienceFields.appendChild(newField);
+        });
+        document.getElementById('current_job').addEventListener('change', function() {
+            var endDateField = document.getElementById('end_date');
+            endDateField.disabled = this.checked;
+            if (this.checked) {
+                endDateField.value = ''; // Clear the value if "Current Job" is checked
+            }
+        });
+    </script>
 </body>
 
 </html>
