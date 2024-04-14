@@ -1,13 +1,9 @@
 from flask import Flask, render_template,redirect,url_for,request,redirect, url_for, session,flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from flask import jsonify
-from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
-import os
-import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -21,7 +17,6 @@ class User(db.Model):
     username = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     password= db.Column(db.String(128), nullable=False)
-
 
 @app.route('/')
 def user_index():
@@ -38,7 +33,6 @@ def login():
     if request.method == 'POST':
         username_or_email = request.form['username_or_email']
         password = request.form['password']
-
         user = User.query.filter((User.username == username_or_email) | (User.email == username_or_email)).first()
         if user and user.password == password:
             session['user_id'] = user.Userid
@@ -85,19 +79,15 @@ def logout_success():
 
 @app.route('/dashboard')
 def dashboard():
-    # Check if user is logged in
     if 'user_id' in session:
-        # Get the current user from the database
         user_id = session['user_id']
         current_user = User.query.get(user_id)
         if current_user:
             return render_template('dashboard.html', current_user=current_user)
-    # If user is not logged in, redirect to the login page
     return redirect(url_for('login'))
 
 class PersonalInformation(db.Model):
     PersonalInfoID = db.Column(db.Integer, primary_key=True)
-    # Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)  # New column for CV ID
     Fname = db.Column(db.String(100), nullable=False)
     Lname = db.Column(db.String(100), nullable=False)
@@ -111,20 +101,9 @@ class PersonalInformation(db.Model):
 @app.route('/submit_personal_info', methods=['POST'])  
 def submit_personal_info():
     if request.method == 'POST':
-        # if 'user_id' not in session:
-        #     return 'User not logged in'
-
-        # # Retrieve user ID from session
-        # user_id = session['user_id']
-
-        # Check if CV ID is present in the session
         if 'cv_id' not in session:
             return 'CV not selected'
-
-        # Retrieve CV ID from the session
         cv_id = session['cv_id']
-
-        # Retrieve personal information from the form
         CV_ID=cv_id,  # Include CV ID
         first_name = request.form['first_name']
         last_name = request.form['last_name']
@@ -148,14 +127,10 @@ def submit_personal_info():
             LinkedIn=linkedin,
             Summary=summary
         )
-
-        # Add and commit the new instance to the database
         db.session.add(new_personal_info)
         db.session.commit()
 
         return render_template('education.html')
-
-
 
 class CV(db.Model):
     CV_ID=db.Column(db.Integer,primary_key=True)
@@ -191,11 +166,7 @@ def submit_education():
     if request.method == 'POST':
         if 'cv_id' not in session:
             return 'CV not selected'
-
-        # Retrieve CV ID from the session
         cv_id = session['cv_id']
-
-        # Retrieve education details from the form
         education_details = []
         for i in range(len(request.form.getlist('degree'))):
             degree = request.form.getlist('degree')[i]
@@ -224,32 +195,7 @@ def submit_education():
         db.session.commit()
 
         # Redirect to another page
-        return render_template('Skills.html')  # Replace 'Experience.html' with the desired template
-
-# class Skills(db.Model):
-#     __tablename__ = 'skills'
-#     SkillID=db.Column(db.Integer,primary_key=True)
-#     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
-#     Skillname=db.Column(db.String(255),nullable=False)
-#     proficiency=db.Column(db.String(255),nullable=False)
-#     experience =db.relationship('Experience', back_populates='skills')
-
-# @app.route('/add_skill',methods=[ "GET", "POST"])
-# def add_skill():
-#     if request.method=="POST":
-#         if 'cv_id' not in session:
-#             return 'CV not selected'
-
-#         # Retrieve CV ID from the session
-#         cv_id = session['cv_id']
-#         Skillname=request.form['skill_name']
-#         proficiency=request.form['proficiency_level']
-
-#         skill=Skills(CV_ID=cv_id,Skillname=Skillname,proficiency=proficiency)
-#         db.session.add(skill)
-#         db.session.commit()
-#         return render_template('language.html')
-#     return "Error"
+        return render_template('Skills.html')
 
 class Language(db.Model):
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
@@ -323,45 +269,42 @@ def add_interest():
 
         # Commit changes to the database
         db.session.commit()
-        skills = Skills.query.all()
+        # skills = Skills.query.all()
 
-        return render_template("Experience.html",skills=skills)
+        return render_template("achievement.html")
 
 
 
 class Achievement(db.Model):
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
     AchievID=db.Column(db.Integer,primary_key=True)
-    Userid=db.Column(db.Integer,db.ForeignKey("user.Userid"),nullable=False)
-    achieve_descri=db.Column(db.String(255),nullable=False)
+    desc=db.Column(db.String(255),nullable=False)
 
 @app.route("/add_achievement",methods=['POST'])
 def add_achievement():
-    if request.method=='POST':
+    if request.method == 'POST':
         if 'cv_id' not in session:
             return 'CV not selected'
-
-        # Retrieve CV ID from the session
+        
+        # Retrieve cv id and user id from session
         cv_id = session['cv_id']
+        # Add more interests
+        achievement_names = request.form.getlist('achievement_name')
 
-        #add more in interest
-        Achievement_details=[]
-        for i in range(len(request.form.getlist(''))):
-            achievement_name=request.form.getlist('interest_name')[i]
+        for achievement_name in achievement_names:
+            # Create a new instance of Interest model
+            new_achievement = Achievement(
+                CV_ID=cv_id,                
+                desc=achievement_name
+            )
 
-            Achievement_details.append({
-                'achievement_name':achievement_name
-            })
+            # Add the new interest instance to the database session
+            db.session.add(new_achievement)
+        
 
-        # create new instance of interest model
-        new_achievement= Achievement(
-            CV_ID=cv_id,
-            achievement_name=achievement_name       )
-
-        db.session.add(new_achievement)
+        # Commit changes to the database
         db.session.commit()
-
-        return 'thanku'
+        return render_template("certificate.html")
 
 
 
@@ -376,8 +319,7 @@ class Experience(db.Model):
     start_date = db.Column(db.Date, nullable=False)  # Renamed from StartDate
     end_date = db.Column(db.Date, nullable=True)  # Renamed from EndDate
     description = db.Column(db.String(255), nullable=False)  # Renamed from Desc
-    skill_ids = db.Column(db.String(255))  # Store skill IDs as comma-separated string
-    skills = db.relationship('Skills', secondary='experience_skills', backref='experiences')
+    skill_id=db.Column(db.Integer,db.ForeignKey('skills.SkillID'))
 
 class Skills(db.Model):
     __tablename__ = 'skills'
@@ -407,12 +349,16 @@ def submit_experience():
         title = request.form.getlist('title')[i]
         company = request.form.getlist('company')[i]
         location = request.form.getlist('location')[i]
-        start_date = request.form.getlist('start_date')[i]
-        end_date = request.form.getlist('end_date')[i] if 'end_date' in request.form else None
+        start_date_str = request.form.getlist('start_date')[i]
+        end_date_str = request.form.getlist('end_date')[i] if 'end_date' in request.form else None
         description = request.form.getlist('description')[i]
         current_job = 'current_job' in request.form and request.form.getlist('current_job')[i] == 'yes'
-        selected_skills = request.form.getlist('selected_skills')[i]
+        selected_skills = request.form.getlist('selected_skills[]')
 
+        start_date=datetime.strptime(start_date_str,'%Y-%m-%d').date()
+        end_date=datetime.strptime(end_date_str,'%Y-%m-%d').date() if end_date_str else None
+
+        skill_ids=','.join(selected_skills)
         # Create a new Experience instance
         experience = Experience(
             CV_ID=cv_id,
@@ -422,22 +368,16 @@ def submit_experience():
             start_date=start_date,
             end_date=end_date,
             description=description,
-            current_job=current_job
+            current_job=current_job,
+            skill_id=skill_ids
         )
 
-        # Add selected skills to the experience
-        for skill_id in selected_skills:
-            skill = Skills.query.get(skill_id)
-            if skill:
-                experience.skills.append(skill)
-
-        experiences.append(experience)
-
     # Add all experiences to the database and commit
-    db.session.add_all(experiences)
+    db.session.add(experience)
     db.session.commit()
 
-    return 'Experiences submitted successfully!'
+    skills = Skills.query.all()
+    return render_template("project.html",skills=skills)
 
 
 # Flask route to handle skill addition
@@ -463,12 +403,87 @@ def add_skill():
         # Commit all the new skills to the database
         db.session.commit()
 
+        skills = Skills.query.all()
         # Redirect to a success page or render a template
-        return render_template("language.html")
+        return render_template("Experience.html", skills=skills)
     
     # If request method is not POST (GET request), render the skill entry form
     return render_template('skills.html')
 
+class Project(db.Model):
+    ProjectID=db.Column(db.Integer,primary_key=True)
+    CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    skill_id=db.Column(db.Integer,db.ForeignKey('skills.SkillID'))
+    PrjtName=db.Column(db.String(255),nullable=False)
+    Desc=db.Column(db.String(255),nullable =False)
+    Responsibilities=db.Column(db.String(255),nullable=False)
+
+@app.route('/submit_project', methods=["POST"])
+def submit_project():
+    if 'cv_id' not in session:
+        return 'CV not selected'
+
+    cv_id = session['cv_id']
+    projects = []
+
+    # Get the length of form data based on any one field
+    form_length = len(request.form.getlist('name'))
+
+    # Retrieve form data for each project
+    for i in range(form_length):
+        name = request.form.getlist('name')[i]
+        description = request.form.getlist('description')[i]
+        responsibilities = request.form.getlist('responsibilities')[i]
+        selected_skills = request.form.getlist('selected_skills[]')
+
+        skill_ids = ','.join(selected_skills)
+        
+        # Create a new Project instance
+        project = Project(
+            CV_ID=cv_id,
+            PrjtName=name,
+            Desc=description,
+            Responsibilities=responsibilities,
+            skill_id=skill_ids
+        )
+
+        # Add the project to the list
+        projects.append(project)
+
+    # Add all projects to the database and commit
+    db.session.add_all(projects)
+    db.session.commit()
+
+    return render_template("language.html")
+
+class Certificates(db.Model):
+    CertificateID=db.Column(db.Integer,primary_key=True)
+    CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    Name=db.Column(db.String(255),nullable=False)
+    Issuer=db.Column(db.String(255),nullable=False)
+
+@app.route('/submit_certificate', methods=["POST"])
+def submit_certificate():
+    if 'cv_id' not in session:
+        return 'CV not selected'
+
+    cv_id = session['cv_id']
+    certificates = []
+    form_length = len(request.form.getlist('name'))
+    for i in range(form_length):
+        name = request.form.getlist('name')[i]
+        issuer = request.form.getlist('issuer')[i]
+        certificate = Certificates(
+            CV_ID=cv_id,
+            Name=name,
+            Issuer=issuer
+        )
+        certificates.append(certificate)
+
+    db.session.add_all(certificates)
+    db.session.commit()
+
+    return "DONE WITH THE DETAILS PART"
 
     
 if __name__ == '__main__':

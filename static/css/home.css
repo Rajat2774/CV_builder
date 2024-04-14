@@ -1,0 +1,44 @@
+   /* Custom Styles for Home Page */
+
+   body {
+    font-family: Arial, sans-serif;
+    background: #13072e;
+}
+
+.home-container {
+    margin-top: 50px;
+}
+
+.home-card {
+    width: 300px;
+    margin: auto;
+    margin-top: 100px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #13072e, #3f2182); /* Gradient background */
+    color: #fff; /* Text color */
+}
+
+.home-card .card-title {
+    color: #ffc107; /* Title text color */
+}
+
+.home-card .card-text {
+    color: #f8f9fa; /* Text color */
+}
+
+.home-card .btn-primary {
+    background-color: #ffc107; /* Button background color */
+    border-color: #ffc107; /* Button border color */
+}
+
+.home-card .btn-primary:hover {
+    background-color: #e0a800; /* Button background color on hover */
+    border-color: #e0a800; /* Button border color on hover */
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
