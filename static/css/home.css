@@ -1,6 +1,6 @@
    /* Custom Styles for Home Page */
 
-   body {
+  body {
     font-family: Arial, sans-serif;
     background: #13072e;
 }
@@ -27,7 +27,6 @@
 .home-card .card-text {
     color: #f8f9fa; /* Text color */
 }
-
 .home-card .btn-primary {
     background-color: #ffc107; /* Button background color */
     border-color: #ffc107; /* Button border color */
@@ -41,4 +40,23 @@
 h1 {
     color: white;
     text-align: center;
+}
+
+.navbar {
+    background-color: #0c0223!important; 
+    }
+.navbar-nav .nav-link {
+    color: white; /* Change the color of the navbar links */
+    }
+.navbar-nav .nav-link.active {
+    color: #ffc107; /* Change the color of the active navbar link */
+    }
+.navbar-toggler-icon {
+    color: white; /* Change the color of the navbar toggler icon */
+    }
+.navbar-brand{
+    color:white;
+}
+.navbar-toggler {
+    border-color: white; /* Change the color of the navbar toggler button */
 }

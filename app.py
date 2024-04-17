@@ -483,10 +483,119 @@ def submit_certificate():
     db.session.add_all(certificates)
     db.session.commit()
 
-    return "DONE WITH THE DETAILS PART"
+    return redirect(url_for('cv_template'))
 
-    
+@app.route('/cv_template')
+def cv_template():
+    if 'cv_id' not in session:
+        return 'CV not selected'
+
+    cv_id = session['cv_id']
+
+    # Fetch user, personal information, education, experience, skills, projects, languages, interests, achievements, and certificates based on the CV ID
+    user = User.query.join(CV).filter(CV.CV_ID == cv_id).first()
+    personal_info = PersonalInformation.query.filter_by(CV_ID=cv_id).first()
+    education = Education.query.filter_by(CV_ID=cv_id).all()
+    experience = Experience.query.filter_by(CV_ID=cv_id).all()
+    skills = Skills.query.filter_by(CV_ID=cv_id).all()
+    projects = Project.query.filter_by(CV_ID=cv_id).all()
+    languages = Language.query.filter_by(CV_ID=cv_id).all()
+    interests = Interest.query.filter_by(CV_ID=cv_id).all()
+    achievements = Achievement.query.filter_by(CV_ID=cv_id).all()
+    certificates = Certificates.query.filter_by(CV_ID=cv_id).all()
+
+    # Render the CV template with the fetched data
+    return render_template('CV.html', user=user, personal_info=personal_info, education=education, experience=experience, skills=skills, projects=projects, languages=languages, interests=interests, achievements=achievements, certificates=certificates)
+
+#QUERIES:--->
+
+@app.route('/queryall/<int:cv_id>')
+def queryall(cv_id):
+    personal_info = PersonalInformation.query.filter_by(CV_ID=cv_id).all()
+    education_details = Education.query.filter_by(CV_ID=cv_id).all()
+    # Experience_details = Experience.query.filter_by(CV_ID=cv_id).all()
+    Skill_details = Skills.query.filter_by(CV_ID=cv_id).all()
+    Certificates_details = Certificates.query.filter_by(CV_ID=cv_id).all()
+    interest_details = Interest.query.filter_by(CV_ID=cv_id).all()
+    language_details = Language.query.filter_by(CV_ID=cv_id).all()
+    Achievement_details = Achievement.query.filter_by(CV_ID=cv_id).all()
+    experiences = Experience.query.filter_by(CV_ID=cv_id).all()
+
+    # Fetch skill names associated with each experience
+    experience_skills = {}
+    for experience in experiences:
+        skill_ids = [experience.skill_id]  # Assuming skill_id is a comma-separated string of skill IDs
+        skill_names = [skill.skill_name for skill in Skills.query.filter(Skills.SkillID.in_(skill_ids))]
+        experience_skills[experience.ExpID] = skill_names
+
+    projects = Project.query.filter_by(CV_ID=cv_id).all()
+
+    # Fetch skill names associated with each project
+    project_skills = {}
+    for project in projects:
+        skill_ids = [project.skill_id]  # Assuming skill_id is a comma-separated string of skill IDs
+        skill_names = [skill.skill_name for skill in Skills.query.filter(Skills.SkillID.in_(skill_ids))]
+        project_skills[project.ProjectID] = skill_names
+
+    return render_template('Queries_all.html',Certificates_details=Certificates_details ,personal_info=personal_info, education_details=education_details,experiences=experiences, experience_skills=experience_skills,Skill_details=Skill_details,projects=projects, project_skills=project_skills,interest_details=interest_details,language_details=language_details,Achievement_details=Achievement_details)
+
+
+@app.route('/display_data')
+def display_data():
+    # Query 1: Retrieve Users with their CV Titles and Personal Information
+    users_with_cv_personal_info = db.session.query(User, CV.Title, PersonalInformation.Fname, PersonalInformation.Lname,
+                                                   PersonalInformation.DOB, PersonalInformation.Address,
+                                                   PersonalInformation.Phn, PersonalInformation.Email,
+                                                   PersonalInformation.LinkedIn, PersonalInformation.Summary) \
+                                          .join(CV, User.Userid == CV.Userid) \
+                                          .join(PersonalInformation, CV.CV_ID == PersonalInformation.CV_ID) \
+                                          .all()
+
+    # Query 2: Retrieve Users with Experience in a Specific Skill (e.g., C++)
+    users_with_specific_skill_experience = db.session.query(User). \
+    join(CV, User.Userid == CV.Userid). \
+    join(Experience, CV.CV_ID == Experience.CV_ID). \
+    join(Skills, Experience.skill_id == Skills.SkillID). \
+    filter(Skills.skill_name == 'C++'). \
+    distinct(User.Userid).all()
+
+    # Query 3: Retrieve Projects with Associated Skills and Users
+    projects_with_skills_and_users = db.session.query(Project, Skills.skill_name, User.username, User.email). \
+        join(Skills, Project.skill_id == Skills.SkillID). \
+        join(CV, Project.CV_ID == CV.CV_ID). \
+        join(User, CV.Userid == User.Userid).all()
+
+    # Query 4: Retrieve Users with Interests, Languages, and Achievements
+    user_interests_languages_achievements = db.session.query(User, Interest.interest_name, Language.LangName,
+                                                             Language.Proficiency_Lang, Achievement.desc). \
+        join(CV, User.Userid == CV.Userid, isouter=True). \
+        join(Interest, CV.CV_ID == Interest.CV_ID, isouter=True). \
+        join(Language, CV.CV_ID == Language.CV_ID, isouter=True). \
+        join(Achievement, CV.CV_ID == Achievement.CV_ID, isouter=True).all()
+
+    # Query 5: Retrieve Users with Experience in Both Python and JavaScript
+    users_with_multiple_skills_experience = db.session.query(User). \
+        join(CV, User.Userid == CV.Userid). \
+        join(Experience, CV.CV_ID == Experience.CV_ID). \
+        join(Skills, Experience.skill_id == Skills.SkillID). \
+        filter(Skills.skill_name.in_(['Python', 'JavaScript'])). \
+        group_by(User.Userid). \
+        having(db.func.count(db.distinct(Skills.SkillID)) == 2).all()
+
+    return render_template('display_data.html', users_with_cv_personal_info=users_with_cv_personal_info,
+                           users_with_specific_skill_experience=users_with_specific_skill_experience,
+                           projects_with_skills_and_users=projects_with_skills_and_users,
+                           user_interests_languages_achievements=user_interests_languages_achievements,
+                           users_with_multiple_skills_experience=users_with_multiple_skills_experience)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+
+
+
+   
+
+

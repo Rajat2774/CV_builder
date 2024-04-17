@@ -2,7 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #13072e;
 }
 
 .container {
@@ -14,13 +14,16 @@ body {
     border-radius: 8px;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #13072e, #3f2182);
 }
 
 h1 {
     margin-bottom: 30px;
-    color: #007bff;
+    color: #ffc107;
 }
-
+p{
+    color:white;
+}
 form {
     margin-bottom: 20px;
 }
@@ -29,7 +32,7 @@ label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #333;
+    color:white;
 }
 
 input[type="text"],
@@ -74,3 +77,21 @@ button[type="submit"]:hover {
     color: #155724;
     border-color: #c3e6cb;
 }
+.navbar {
+    background-color: #0c0223!important; 
+    }
+.navbar-nav .nav-link {
+    color: white; /* Change the color of the navbar links */
+    }
+.navbar-nav .nav-link.active {
+    color: #ffc107; /* Change the color of the active navbar link */
+    }
+.navbar-toggler-icon {
+    color: white; /* Change the color of the navbar toggler icon */
+    }
+.navbar-brand{
+    color:white;
+}
+  .navbar-toggler {
+    border-color: white; /* Change the color of the navbar toggler button */
+  }

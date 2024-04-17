@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queries</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* Add space between columns */
+        th:not(:last-child),
+        td:not(:last-child) {
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>All Personal info with cv id:</h2>
+    <ul>
+        {% for info in personal_info %}
+            <li><strong>Name:</strong> {{ info.Fname }} {{ info.Lname }}</li>
+            <li><strong>Date of Birth:</strong> {{ info.DOB }}</li>
+            <li><strong>Address:</strong> {{ info.Address }}</li>
+            <li><strong>Phone:</strong> {{ info.Phn }}</li>
+            <li><strong>Email:</strong> {{ info.Email }}</li>
+            <li><strong>LinkedIn:</strong> {{ info.LinkedIn }}</li>
+            <li><strong>Summary:</strong> {{ info.Summary }}</li>
+            <br>
+        {% endfor %}
+    </ul>
+    <h2>All Educational info with cv id:</h2>
+    <ul>
+    {% for edu in education_details %}
+        <li>Degree: {{ edu.Degree }}</li>
+        <li>School: {{ edu.School }}</li>
+        <li>Field of Study: {{ edu.FieldofStudy }}</li>
+        <li>Graduation Date: {{ edu.Grad_date }}</li><br><br>
+    {% endfor %}
+    </ul>
+    <h2>All Experience details with a cv id:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Skills</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for experience in experiences %}
+                <tr>
+                    <td>{{ experience.title }}</td>
+                    <td>{{ experience.company }}</td>
+                    <td>{{ experience.location }}</td>
+                    <td>{{ experience.start_date }}</td>
+                    <td>{{ experience.end_date }}</td>
+                    <td>{{ experience.description }}</td>
+                    <td>
+                        {% for skill in experience_skills[experience.ExpID] %}
+                            {{ skill }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>All Skills with cv id:</h2>
+    <ul>
+    {% for skill in Skill_details %}
+        <li>Skill Name: {{ skill.skill_name }}</li>
+        <li>Proficiency: {{ skill.proficiency }}</li><br>
+    {% endfor %}
+    </ul>
+    <h2>All Projects with a cv id:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Responsibilities</th>
+                <th>Skills</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>{{ project.PrjtName }}</td>
+                    <td>{{ project.Desc }}</td>
+                    <td>{{ project.Responsibilities }}</td>
+                    <td>
+                        {% for skill in project_skills[project.ProjectID] %}
+                            {{ skill }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>All interest with a cv id:</h2>
+    <ul>
+    {% for interest in interest_details %}
+        <li>{{ interest.interest_name }}</li>
+    {% endfor %}
+    </ul>
+    <h2>All Certificate info with cv id:</h2>
+    <ul>
+    {% for cert in Certificates_details %}
+        <li>{{ cert.Name }}</li>
+        <li>{{ cert.Issuer }}</li><br>
+    {% endfor %}
+    </ul>
+    <h2>All Language info with cv id:</h2>
+    <ul>
+    {% for language in language_details %}
+        <li>{{ language.LangName }} - {{ language.Proficiency_Lang }}</li>
+    {% endfor %}
+    </ul>
+    <h2>All Achievements Detail with cv id:</h2>
+    <ul>
+    {% for achievement in Achievement_details %}
+        <li>{{ achievement.desc }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

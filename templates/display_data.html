@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Display</title>
+</head>
+<body>
+    <h1>Users with CV Titles and Personal Information</h1>
+    <ul>
+        {% for user, title, fname, lname, dob, address, phn, email, linkedin, summary in users_with_cv_personal_info %}
+            <li>User: {{ user.username }}</li>
+            <li>Title: {{ title }}</li>
+            <li>Name: {{ fname }} {{ lname }}</li>
+            <li>Date of Birth: {{ dob }}</li>
+            <li>Address: {{ address }}</li>
+            <li>Phone: {{ phn }}</li>
+            <li>Email: {{ email }}</li>
+            <li>LinkedIn: {{ linkedin }}</li>
+            <li>Summary: {{ summary }}</li>
+            <hr>
+        {% endfor %}
+    </ul>
+    <h1>Users with Experience in C++</h1>
+<ul>
+    {% for user in users_with_specific_skill_experience %}
+        <li>User: {{ user.username }}</li>
+    {% endfor %}
+</ul>
+<h1>Projects with Associated Skills and Users</h1>
+<ul>
+    {% for project, skill_name, username, email in projects_with_skills_and_users %}
+        <li>Project Name: {{ project.PrjtName }}</li>
+        <li>Skill: {{ skill_name }}</li>
+        <li>User: {{ username }} ({{ email }})</li>
+        <hr>
+    {% endfor %}
+</ul>
+<h1>Users with Interests, Languages, and Achievements</h1>
+<ul>
+    {% for user, interest, lang_name, proficiency, achievement_desc in user_interests_languages_achievements %}
+        <li>User: {{ user.username }}</li>
+        <li>Interest: {{ interest }}</li>
+        <li>Language: {{ lang_name }} (Proficiency: {{ proficiency }})</li>
+        <li>Achievement: {{ achievement_desc }}</li>
+        <hr>
+    {% endfor %}
+</ul>
+<h1>Users with Experience in Both Python and JavaScript</h1>
+<ul>
+    {% for user in users_with_multiple_skills_experience %}
+        <li>User: {{ user.username }}</li>
+    {% endfor %}
+</ul>
+
+    <!-- Add other sections for displaying data from other queries -->
+</body>
+</html>

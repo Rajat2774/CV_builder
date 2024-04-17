@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    padding: 20px;
+    background-color: #13072e;
 }
 
 .container {
@@ -11,15 +10,18 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #13072e, #3f2182);
 }
 
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    color:white;
 }
 
 label {
     font-weight: bold;
+    color:white;
 }
 
 input[type="text"],
@@ -41,6 +43,9 @@ textarea {
 .checkbox-group label {
     display: block;
     margin-bottom: 5px;
+}
+.checkbox-group{
+    color:white;
 }
 
 button[type="submit"] {
@@ -66,3 +71,21 @@ button[type="submit"]:hover {
     padding: 10px 20px;
     cursor: pointer;
 }
+.navbar {
+    background-color: #0c0223!important; 
+    }
+.navbar-nav .nav-link {
+    color: white; /* Change the color of the navbar links */
+    }
+.navbar-nav .nav-link.active {
+    color: #ffc107; /* Change the color of the active navbar link */
+    }
+.navbar-toggler-icon {
+    color: white; /* Change the color of the navbar toggler icon */
+    }
+.navbar-brand{
+    color:white;
+}
+  .navbar-toggler {
+    border-color: white; /* Change the color of the navbar toggler button */
+  }

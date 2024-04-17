@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s CV</title>
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
+    <style>
+        /* Global CSS */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+        h1, h2, h3 {
+            color:#007bff;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+
+        /* Wrapper Styles */
+        .wrapper {
+            display: flex;
+        }
+        .left {
+            background-color: rgba(0, 0, 0, 0.025);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            flex-basis: 33.33%;
+            min-width: 256px;
+            position: fixed;
+            height: 100%;
+        }
+        .right {
+            flex-basis: 66.66%;
+            margin-left: 33.33%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* Name and Hero Section Styles */
+        .name-hero {
+            background-color: rgba(0, 0, 0, 0.001);
+            height: 290px;
+            margin: auto;
+            position: relative;
+            width: 85%;
+        }
+        .me-img {
+            background: url(https://media-exp1.licdn.com/dms/image/C4E03AQGnLq_IB_mf8Q/profile-displayphoto-shrink_400_400/0/1631022739752?e=1648684800&v=beta&t=eICUjHeH_g9GQEItmEMK1j2gCADwqfjrlccSD_5za58) no-repeat center center;
+            background-size: 100%;
+            border-radius: 100%;
+            height: 150px;
+            margin: 0 auto;
+            width: 150px;
+        }
+        .name-text {
+            margin: 0 auto;
+            width: 85%;
+        }
+        .name-hero h1 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .name-hero h1 em {
+            color: rgba(0, 0, 0, 0.3);
+            font-style: normal;
+            font-weight: 700;
+        }
+        .name-hero p {
+            color: rgba(0, 0, 0, 0.75);
+            font-size: 0.75em;
+            line-height: 1.5;
+            margin: 0 8px 0 0;
+            text-align: center;
+        }
+
+        /* Inner Section Styles */
+        .inner {
+            margin: 0 auto;
+            max-width: 975px;
+            padding: 3em;
+        }
+        .inner h1 {
+            font-size: 1.75em;
+        }
+        .inner p {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        .inner p em {
+            color: rgba(0, 0, 0, 1);
+            font-style: normal;
+        }
+        .inner section {
+            margin: 100px auto;
+        }
+
+        /* Skill Set Styles */
+        .skill-set li {
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 5px;
+            color: #fff;
+            display: inline-block;
+            list-style: none;
+            margin: 15px 15px 0 0;
+            padding: 10px;
+            text-align: justify;
+        }
+        .skill-set li:hover {
+            background: #3498db;
+        }
+
+        /* Handmade Section Styles */
+        .handmade {
+            text-align: right;
+            margin-top: 100px;
+        }
+        .handmade em {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1.25em;
+            margin-left: 5px;
+        }
+
+        /* Print Button Styles */
+        .print-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .print-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper clearfix">
+        <div class="left">
+            <div class="name-hero">
+                <div class="me-img"></div>
+                <div class="name-text">
+                    <h1>{{ personal_info.Fname }} <em>{{ personal_info.Lname }}</em></h1>
+                    <p>{{ personal_info.Address }}</p>
+                    <p>{{ personal_info.Email }}</p>
+                    <p>{{ personal_info.Phn }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="inner">
+                <section>
+                    <h1>Education</h1>
+                    {% for edu in education %}
+                    <p>{{ edu.Degree }} - {{ edu.School }} ({{ edu.Grad_date }})</em></p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h1>Experience</h1>
+                    {% for exp in experience %}
+                    <p>{{ exp.start_date }} - {% if exp.end_date %}{{ exp.end_date }}{% else %}Present{% endif %} <em>{{ exp.title }} at {{ exp.company }}</em></p>
+                    <p>{{ exp.description }}</p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h1>Skills</h1>
+                    <ul class="skill-set">
+                        {% for skill in skills %}
+                        <li>{{ skill.skill_name }}- {{ skill.proficiency }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section>
+                    <h1>Projects</h1>
+                    {% for prjt in projects %}
+                    <p>{{ prjt.PrjtName }}</em></p>
+                    <p>{{ prjt.Desc }}-{{ prjt.Responsibilities}}</p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h1>Languages</h1>
+                    {% for lan in languages %}
+                    <p>{{ lan.LangName }} - {{ lan.Proficiency_Lang }}</em></p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h1>Personal Interests</h1>
+                    <ul class="skill-set">
+                        {% for interest in interests %}
+                        <li>{{ interest.interest_name }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                <section>
+                    <h1>Achievements</h1>
+                    {% for ach in achievements %}
+                    <p>{{ ach.desc }}</em></p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <h1>Certificates</h1>
+                    {% for cer in certificates %}
+                    <p>{{ cer.Name }}--{{ cer.Issuer }}</em></p>
+                    {% endfor %}
+                </section>
+                <section>
+                    <div class="handmade">
+                        <p>handmade by <em>{{ personal_info.Fname }} {{ personal_info.Lname }}</em></p>
+                    </div>
+                </section>
+                <!-- Print Button -->
+                <section>
+                    <button class="print-button" onclick="window.print()">Print CV</button>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
