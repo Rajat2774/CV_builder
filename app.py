@@ -88,6 +88,7 @@ def dashboard():
 
 class PersonalInformation(db.Model):
     PersonalInfoID = db.Column(db.Integer, primary_key=True)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)  # New column for CV ID
     Fname = db.Column(db.String(100), nullable=False)
     Lname = db.Column(db.String(100), nullable=False)
@@ -101,6 +102,11 @@ class PersonalInformation(db.Model):
 @app.route('/submit_personal_info', methods=['POST'])  
 def submit_personal_info():
     if request.method == 'POST':
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
         cv_id = session['cv_id']
@@ -116,7 +122,7 @@ def submit_personal_info():
 
         # Create a new instance of PersonalInformation model
         new_personal_info = PersonalInformation(
-            # Userid=user_id,
+            Userid=user_id,
             CV_ID=cv_id,  # Include CV ID
             Fname=first_name,
             Lname=last_name,
@@ -156,6 +162,7 @@ def create_cv():
 class Education(db.Model):
     Edu_ID=db.Column(db.Integer,primary_key=True)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     Degree=db.Column(db.String(255),nullable=False)
     School=db.Column(db.String(255),nullable=False)
     FieldofStudy=db.Column(db.String(255),nullable=False)
@@ -164,6 +171,11 @@ class Education(db.Model):
 @app.route('/submit_education', methods=['POST'])
 def submit_education():
     if request.method == 'POST':
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
         cv_id = session['cv_id']
@@ -183,6 +195,7 @@ def submit_education():
 
             # Create a new instance of Education model for each set of education details
             new_ed = Education(
+                Userid=user_id,
                 CV_ID=cv_id,
                 Degree=degree,
                 School=school,
@@ -208,6 +221,11 @@ class Language(db.Model):
 @app.route("/add_language", methods=['POST'])
 def add_language():
     if request.method == 'POST':
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
         
@@ -245,6 +263,11 @@ class Interest(db.Model):
 @app.route("/add_interest", methods=['POST'])
 def add_interest():
     if request.method == 'POST':
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
         
@@ -278,11 +301,17 @@ def add_interest():
 class Achievement(db.Model):
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
     AchievID=db.Column(db.Integer,primary_key=True)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     desc=db.Column(db.String(255),nullable=False)
 
 @app.route("/add_achievement",methods=['POST'])
 def add_achievement():
     if request.method == 'POST':
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
         
@@ -294,6 +323,7 @@ def add_achievement():
         for achievement_name in achievement_names:
             # Create a new instance of Interest model
             new_achievement = Achievement(
+                Userid=user_id,
                 CV_ID=cv_id,                
                 desc=achievement_name
             )
@@ -312,6 +342,7 @@ class Experience(db.Model):
     __tablename__ = 'experience'
     ExpID = db.Column(db.Integer, primary_key=True)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     current_job = db.Column(db.Boolean, default=False)
     title = db.Column(db.String(255), nullable=False)
     company = db.Column(db.String(255), nullable=False)
@@ -324,6 +355,7 @@ class Experience(db.Model):
 class Skills(db.Model):
     __tablename__ = 'skills'
     SkillID = db.Column(db.Integer, primary_key=True)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
     skill_name = db.Column(db.String(255), nullable=False)  # Renamed from Skillname
     proficiency = db.Column(db.String(255), nullable=False)
@@ -335,6 +367,11 @@ class ExperienceSkills(db.Model):
 
 @app.route('/submit_experience', methods=["POST"])
 def submit_experience():
+    if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+    user_id = session['user_id']
     if 'cv_id' not in session:
         return 'CV not selected'
 
@@ -361,6 +398,7 @@ def submit_experience():
         skill_ids=','.join(selected_skills)
         # Create a new Experience instance
         experience = Experience(
+            Userid=user_id,
             CV_ID=cv_id,
             title=title,
             company=company,
@@ -384,6 +422,11 @@ def submit_experience():
 @app.route('/add_skill', methods=["GET", "POST"])
 def add_skill():
     if request.method == "POST":
+        if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+        user_id = session['user_id']
         if 'cv_id' not in session:
             return 'CV not selected'
 
@@ -397,7 +440,7 @@ def add_skill():
         # Iterate through the submitted skill names and proficiency levels
         for skill_name, proficiency_level in zip(skill_names, proficiency_levels):
             # Create a new Skills instance for each skill
-            skill = Skills(CV_ID=cv_id, skill_name=skill_name, proficiency=proficiency_level)
+            skill = Skills(Userid=user_id,CV_ID=cv_id, skill_name=skill_name, proficiency=proficiency_level)
             db.session.add(skill)
 
         # Commit all the new skills to the database
@@ -413,6 +456,7 @@ def add_skill():
 class Project(db.Model):
     ProjectID=db.Column(db.Integer,primary_key=True)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     skill_id=db.Column(db.Integer,db.ForeignKey('skills.SkillID'))
     PrjtName=db.Column(db.String(255),nullable=False)
     Desc=db.Column(db.String(255),nullable =False)
@@ -420,6 +464,11 @@ class Project(db.Model):
 
 @app.route('/submit_project', methods=["POST"])
 def submit_project():
+    if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+    user_id = session['user_id']
     if 'cv_id' not in session:
         return 'CV not selected'
 
@@ -440,6 +489,7 @@ def submit_project():
         
         # Create a new Project instance
         project = Project(
+            Userid=user_id,
             CV_ID=cv_id,
             PrjtName=name,
             Desc=description,
@@ -459,11 +509,17 @@ def submit_project():
 class Certificates(db.Model):
     CertificateID=db.Column(db.Integer,primary_key=True)
     CV_ID = db.Column(db.Integer, db.ForeignKey('cv.CV_ID'), nullable=False)
+    Userid = db.Column(db.Integer, db.ForeignKey('user.Userid'), nullable=False)
     Name=db.Column(db.String(255),nullable=False)
     Issuer=db.Column(db.String(255),nullable=False)
 
 @app.route('/submit_certificate', methods=["POST"])
 def submit_certificate():
+    if 'user_id' not in session:
+            return 'User not logged in'
+
+        # Retrieve user ID from session
+    user_id = session['user_id']
     if 'cv_id' not in session:
         return 'CV not selected'
 
@@ -474,6 +530,7 @@ def submit_certificate():
         name = request.form.getlist('name')[i]
         issuer = request.form.getlist('issuer')[i]
         certificate = Certificates(
+            Userid=user_id,
             CV_ID=cv_id,
             Name=name,
             Issuer=issuer
