@@ -758,9 +758,61 @@ def display_data():
 
 
 queries = [
-    "select * from user",
-    "select * from cv",
-    "select * from education",
+    "SELECT u.username, e.Degree, e.School, e.FieldofStudy, e.Grad_date FROM User as u JOIN Education as e ON u.Userid = e.Userid ORDER BY e.Grad_date DESC",
+    "SELECT u.username FROM User as u JOIN Skills s ON u.Userid = s.Userid JOIN Project as p ON u.Userid = p.Userid WHERE s.skill_name = 'Python' AND p.Desc LIKE '%web development%'",
+    "SELECT DISTINCT u.username FROM User as u JOIN Skills as s ON u.Userid = s.Userid WHERE s.skill_name = 'Python' AND s.proficiency = 'Advanced'",
+    "SELECT DISTINCT u.username FROM User u JOIN Experience e ON u.Userid = e.Userid JOIN Skills s ON u.Userid = s.Userid WHERE s.skill_name = 'Java'",
+    "SELECT DISTINCT u.username FROM User u JOIN Skills s ON u.Userid = s.Userid JOIN Experience e ON u.Userid = e.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Advanced' AND e.title = 'Software Developer'",
+    "SELECT DISTINCT u.username FROM User u JOIN Experience e ON u.Userid = e.Userid JOIN Skills s ON u.Userid = s.Userid WHERE e.title = 'Project Manager' AND s.skill_name = 'Agile Scrum'",
+    "SELECT DISTINCT u.username FROM User u JOIN Interest i ON u.Userid = i.Userid WHERE i.interest_name = 'Photography'",
+    "SELECT DISTINCT u.username FROM User u JOIN Skills s ON u.Userid = s.Userid JOIN Experience e ON u.Userid = e.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Intermediate' AND e.current_job = 1 AND e.title = 'Software Developer'",
+    "SELECT DISTINCT u.username FROM User u JOIN Skills s ON u.Userid = s.Userid JOIN Education ed ON u.Userid = ed.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Advanced' AND ed.FieldofStudy = 'Computer Science'",
+    "SELECT DISTINCT u.username FROM User u JOIN Skills s ON u.Userid = s.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Advanced'",
+    "SELECT DISTINCT u.username,u.email FROM User u JOIN Experience e ON u.Userid = e.Userid WHERE e.location = 'New York'",
+    "SELECT DISTINCT u.username,ed.Degree,ed.School FROM User u JOIN Education ed ON u.Userid = ed.Userid WHERE ed.FieldofStudy = 'Computer Science'",
+    "SELECT DISTINCT u.username,e.company,s.skill_name FROM User u JOIN Skills s ON u.Userid = s.Userid JOIN Experience e ON u.Userid = e.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Advanced' AND e.title LIKE '%Software%'",
+    "SELECT DISTINCT u.username FROM User u JOIN Education ed ON u.Userid = ed.Userid WHERE ed.FieldofStudy IN ('Computer Science', 'Information Technology')",
+    "SELECT DISTINCT u.username FROM User u JOIN Skills s ON u.Userid = s.Userid JOIN Experience e ON u.Userid = e.Userid WHERE s.skill_name = 'Programming' AND s.proficiency = 'Advanced' AND e.title LIKE '%Software%' AND e.location = 'Los Angeles'",
+    "SELECT DISTINCT u.username FROM User u JOIN Experience e ON u.Userid = e.Userid WHERE e.current_job = 1 AND (e.title = 'Software Developer' OR e.title = 'Java Developer')",
+    "SELECT u.username, e.Degree, e.School, e.FieldofStudy, MAX(e.Grad_date) AS Latest_Graduation_Date FROM User AS u JOIN Education AS e ON u.Userid = e.Userid GROUP BY u.username",
+    "SELECT u.username, COUNT(p.ProjectID) AS Project_Count FROM User AS u JOIN Project AS p ON u.Userid = p.Userid GROUP BY u.username ORDER BY Project_Count DESC LIMIT 5",
+    "SELECT u.username, MAX(julianday(e.end_date) - julianday(e.start_date)) AS Longest_Experience_Duration FROM User AS u JOIN Experience AS e ON u.Userid = e.Userid GROUP BY u.username ORDER BY Longest_Experience_Duration DESC LIMIT 5",
+    "SELECT u.username, s.skill_name, COUNT(s.skill_name) AS Skill_Count FROM User AS u JOIN Skills AS s ON u.Userid = s.Userid GROUP BY u.username, s.skill_name ORDER BY Skill_Count DESC LIMIT 5",
+    "SELECT u.username, MAX(e.Degree) AS Highest_Education_Level FROM User AS u JOIN Education AS e ON u.Userid = e.Userid GROUP BY u.username",
+    "SELECT AVG(strftime('%Y', 'now') - strftime('%Y', p.DOB)) AS Avg_Age FROM personal_information AS p"
+
+
+
+
+
+
+
+]
+query_names = [
+    "1. Retrieve Education Details ordered by Graduation Date",
+    "2. Retrieve Users with Python Skills and Web Development Projects",
+    "3. Query to Retrieve Users with Advanced Programming Skills",
+    "4. Query to Retrieve Users with Experience in Java",
+    "5. Query to Retrieve Users with Advanced Programming Skills and Experience in Java",
+    "6. Query to Retrieve Users with Project Management Experience and Proficiency in Agile Scrum",
+    "7. Query to Retrieve Users with Interests in Photography",
+    "8. Query to Retrieve Users with Intermediate Programming Skills and Current Job as Software Developer",
+    "9. Query to Retrieve Users with Advanced Programming Skills and Education in Computer Science",
+    "10. Query to Retrieve Users with Advanced Programming Skills",
+    "11. Query to Retrieve Users with Experience in New York",
+    "12. Query to Retrieve Users with Education in Computer Science",
+    "13. Query to Retrieve Users with Advanced Programming Skills and Experience in Software Development",
+    "14. Query to Retrieve Users with Education in Computer Science or Information Technology",
+    "15. Query to Retrieve Users with Advanced Programming Skills and Experience in Software Development in Los Angeles",
+    "16. Query to Retrieve Users with Current Job as Software Developer or Java Developer",
+    "17. Query to Retrieve Users with the Most Recent Education Details:",
+    "18. Query to Retrieve Users with the Highest Number of Projects",
+    "19. Query to Find Users with the Longest Experience Duration",
+    "20. Query to Retrieve Users with the Most Common Skill Name",
+    "21. Query to Retrieve Users with the Highest Education Level",
+    "22. Query to Calculate the Average Age of Users"
+
+
 ]
 
 
@@ -769,17 +821,12 @@ def custom_query():
     answers = []
     connection = sqlite3.connect("./instance/cvbuilder.db")
     cursor = connection.cursor()
-    for i in range(2):
-        # cursor.execute("Select * from user")
-        cursor.execute(queries[i])
+    for index, query in enumerate(queries):
+        cursor.execute(query)
         resRows = cursor.fetchall()
-        answers.append(resRows)
+        answers.append((query_names[index], resRows))
     connection.close()
-    print("Answers : ")
-    for i in answers:
-        print(i)
     return render_template("custom.html", data=answers)
-    # return jsonify({"data": resRows})
 
 
 if __name__ == "__main__":

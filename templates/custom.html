@@ -3,15 +3,78 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Query</title>
+    <meta name="viewport" content="width=device-width, initial-
+
+scale=1.0">
+    <title>Custom Query Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color:transparent;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .query {
+            margin-bottom: 20px;
+        }
+
+        .query h2 {
+            color:white;
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .result {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #r{
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        {% for i in data %}
-        {{ i }}
-        {% endfor %} 
+    <div class="container">
+        <h1>Custom Query Results</h1>
+        {% for query, result in data %}
+        <div class="query">
+            <h2>{{ query }}</h2>
+            <div class="results">
+                {% if result %}
+                {% for row in result %}
+                <div class="result">
+                    {% for item in row %}
+                    <p>{{ item }}</p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                {% else %}
+                <p id="r">No results found</p>
+                {% endif %}
+                <hr>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </body>
 

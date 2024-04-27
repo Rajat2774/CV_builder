@@ -1,99 +1,77 @@
-   /* Custom Styles for Home Page */
-
-  body {
-    font-family: Arial, sans-serif;
-    background-image:  url('cvRontEndImage.webp');
-    /* background:#0c0223; */
-}
-
-.home-container {
-    margin-top: 50px;
-}
-.home-card {
-        width: 300px;
-        margin: auto;
-        margin-top: 100px;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-        background: rgba(255, 255, 255, 0.8); /* Adjust the opacity as needed */
-        color: blue; /* Text color */
-        backdrop-filter: blur(1px);  /*Apply a blur effect to the background  */
-}
-
-.home-card .card-title {
-    color: #483285; /* Title text color */
-}
-
-.home-card .card-text {
-    color: #483285; /* Text color */
-}
-.home-card .btn-primary {
-    background-color: transparent; /* Button background color */
-    border-color: white; /* Button border color */
-}
-
-.home-card .btn-primary:hover {
-    background-color: rgba(14, 12, 112, 0.5); /* Button background color on hover */
-    border-color: white; /* Button border color on hover */
-}
-
-h1 {
-    color: #483285;
-    text-align: center;
+body {
+    font-family:'Franklin Gothic Medium';
+    background: black; /* Light background color */
+    padding:20px;
 }
 
 .navbar {
-    background-color: rgba(0,0,0,0) !important; /* Transparent background color */
-    backdrop-filter: blur(1px); /* Apply a blur effect to the background */
+    background-color: black !important; /* Dark navbar background */
+    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+    margin: 0 auto; /* Center the navbar */
+    max-width: 800px; /* Set a maximum width for the navbar */
 }
 
+.navbar-brand,
 .navbar-nav .nav-link {
-    color: white; /* Change the color of the navbar links */
+    color: #fff; /* Navbar text color */
 }
 
+.navbar-nav .nav-link:hover {
+    color: #ffc107; /* Navbar text color on hover */
+}
+
+/* Change color of the active navbar link */
 .navbar-nav .nav-link.active {
-    color: #0e0c70; /* Change the color of the active navbar link */
+    color: white;
 }
 
 .navbar-toggler-icon {
-    color: white; /* Change the color of the navbar toggler icon */
+    color: #fff; /* Navbar toggler icon color */
 }
 
-.navbar-brand {
+.container {
+    padding-top: 50px;
+}
+
+h1 {
+    
+    color: #ffc107; /* Title text color */
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50px;
+    border-color: white;
+}
+
+p {
     color: white;
 }
-
-.navbar-toggler {
-    border-color: white; /* Change the color of the navbar toggler button */
-}
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.navbar-nav .signin button {
+    background-color: black; /* Button background color */
+    border: 1px solid white; /* Button border color */
+    color: white; /* Button text color */
+    border-radius: 20px;
+    padding:5px 10px;
 }
 
-.navbar-nav .nav-link:not(.signin) {
-    margin-right: 20px; /* Add gap between navbar icons */
+.navbar-nav .signin button:hover {
+    color: black; /* Button text color on hover */
+    background-color: white; /* Button background color on hover */
 }
 
-.navbar-nav .nav-link.signin {
-    margin-left: auto; /* Shift the Sign in icon to the right */
+/* Get Started button */
+.btn-primary {
+    background-color: black; /* Button background color */
+    border-color: white; /* Button border color */
+    color: white; /* Button text color */
 }
 
-button {
-    padding: 2px 10px;
-    border: 2px solid white;
-    border-radius:  20px; /* Increase border-radius for oval shape */
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: transparent;
-    color:white;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    margin: 10px;
-}
-button:hover {
-    background-color: #0e0c70;
-    color: white;
+.btn-primary:hover {
+    color: black; /* Button text color on hover */
+    background-color: white; /* Button background color on hover */
+    border-color: white; /* Button border color on hover */
 }

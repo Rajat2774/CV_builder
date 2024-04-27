@@ -1,8 +1,8 @@
 body {
-    font-family: fantasy;
+    font-family:'Franklin Gothic Medium';
     /* background-image: url('cvRontEndImage.webp'); */
     background-color: black;
-    padding: 10px;
+    padding: 20px;
 }
 
 .container {
@@ -22,7 +22,7 @@ body {
 h1 {
     margin-bottom: 30px;
     color: #fff;
-    font-family:'Courier New', Courier, monospace
+    font-family:'Rockwell';
 }
 
 form {
@@ -92,13 +92,13 @@ button[type="submit"]:hover {
     color: #155724;
     border-color: #c3e6cb;
 }
-.navbar{
-    background-color: rgba(0, 0, 0, 0)!important; 
-    /* padding: [top] [right] [bottom] [left]; */
-    padding: 1px 0px 1px 325px; /* Adjust padding to decrease width from both corners */
+.navbar {
+    background-color: black !important; /* Dark navbar background */
+    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
     border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
-
+    margin: 0 auto; /* Center the navbar */
+    max-width: 800px; /* Set a maximum width for the navbar */
 }
 
 .navbar-nav .nav-link {

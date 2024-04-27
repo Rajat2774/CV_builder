@@ -1,12 +1,14 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family:'Franklin Gothic Medium';
     /* background-image:  url('cvRontEndImage.webp'); */
     background-color: black;
+    padding:20px;
 }
 .container {
     margin-top: 50px;
 }
 .candidates-details{    
+    font-family: 'Rockwell';
     background-color: black;
     border-radius: 48px;
     padding: 30px;
@@ -16,7 +18,7 @@ body {
 h1{
     margin-bottom: 30px;
     color: #fff;
-    font-family:'Courier New', Courier, monospace
+    font-family:'Rockwell';
 
 }
 p{
@@ -49,7 +51,7 @@ textarea {
 } */
 
 button[type="submit"] {
-    padding: 5px 10px;
+    padding: 5px 20px;
     border: 2px solid white;
     border-radius:  20px; /* Increase border-radius for oval shape */
     font-size: 1rem;
@@ -58,23 +60,18 @@ button[type="submit"] {
     color: white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    margin: 10px;
 }
 button[type="submit"]:hover {
     background-color: #fff;
     color: black;
 }
 .navbar {
-    background-color: rgba(0, 0, 0, 0)!important; 
-    /* padding: 1px 350px; Adjust padding to decrease width from both corners */
-    
-        padding-left: 350px; /* Adjust as needed */
-        padding-right: 400px; /* Adjust as needed */
-        
-    
+    background-color: black !important; /* Dark navbar background */
+    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
     border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
-    margin-top: 10px; /* Shift the navbar downwards */
+    margin: 0 auto; /* Center the navbar */
+    max-width: 800px; /* Set a maximum width for the navbar */
 }
 .navbar-nav .nav-link {
     color: white; /* Change the color of the navbar links */

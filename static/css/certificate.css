@@ -1,5 +1,5 @@
 body {
-    font-family: fantasy;
+    font-family: 'Franklin Gothic Medium';
     background-color: black;
     /* background-image:  url('cvRontEndImage.webp'); */
 }
@@ -16,7 +16,7 @@ body {
 h1{
     margin-bottom: 30px;
     color: #fff;
-    font-family:'Courier New', Courier, monospace
+    font-family:'Rockwell';
 
 }
 
@@ -64,11 +64,12 @@ button[type="submit"]:hover {
 }
 
 .navbar {
-    background-color: rgba(0, 0, 0, 0)!important; 
-    padding: 1px 400px; /* Adjust padding to decrease width from both corners */
+    background-color: black !important; /* Dark navbar background */
+    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
     border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
-    margin-top: 10px; /* Move the navbar down */
+    margin: 0 auto; /* Center the navbar */
+    max-width: 800px; /* Set a maximum width for the navbar */
 }
 
 .navbar-nav .nav-link {
