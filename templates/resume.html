@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="stylesheet" href="resumeStyle.css">
+</head>
+<body>
+    <div id="resume">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/james-moriarty.jpg" alt="James Moriarty">
+        <h1>{{ personal_info.Fname }} {{ personal_info.Lname }}</h1>
+        <p>Cell: <a href="#">{{ personal_info.Phn }}</a></p>
+        <p>Email: <a href="#">{{ personal_info.Email }}</a></p>
+        <p id="objective">{{ personal_info.Summary }}</p>
+        <dl>
+            <dt>Education</dt>
+            <dd>
+                <h2>{{ personal_info.Education }}</h2>
+                <p><strong>Major:</strong> {{ personal_info.Major }}<br/>
+                <strong>Minor:</strong> {{ personal_info.Minor }}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>Skills</dt>
+            <dd>
+                <h2>{{ personal_info.Skills }}</h2>
+                <p>{{ personal_info.Skills_Description }}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>Experience</dt>
+            <dd>
+                {% for experience in personal_info.Experiences %}
+                <h2>{{ experience.title }}<span>{{ experience.location }} {{ experience.start_date }} – {{ experience.end_date }}</span></h2>
+                <ul>
+                    <li>{{ experience.description }}</li>
+                </ul>
+                {% endfor %}
+            </dd>
+        </dl>
+        <dl>
+            <dt>Interests</dt>
+            <dd>
+                <p>{{ personal_info.Interests }}</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>References</dt>
+            <dd>{{ personal_info.References }}</dd>
+        </dl>
+    </div>
+</body>
+</html>

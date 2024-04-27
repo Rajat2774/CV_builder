@@ -21,11 +21,22 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#">Demo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">FAQ</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+        </li>
             </ul>
-            <ul class="navbar-nav">
+            </div>
+            <ul class="navbar-nav ml-auto">
               <li class="nav-item signin">
                   <form action="{{ url_for('logout') }}" method="post">
                       <button type="submit">Logout</button>
@@ -36,7 +47,9 @@
         </div>
       </nav>
     <div class="container">
-        <h2>Project Details</h2>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5 text-center candidates-details">
+        <h1>Project Details</h1>
         <form id="projectForm" action="/submit_project" method="post">
             <div id="projectFields">
                 <div class="projectField">

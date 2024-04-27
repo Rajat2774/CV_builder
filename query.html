@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+</head>
+<body>
+    <h1>Personal Information</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>LinkedIn</th>
+            <th>Summary</th>
+            <th>Certificates</th>
+            <th>Issuers</th>
+        </tr>
+        {% for info in personal_info %}
+        <tr>
+            <td>{{ info.PersonalInfoID }}</td>
+            <td>{{ info.Fname }}</td>
+            <td>{{ info.Lname }}</td>
+            <td>{{ info.DOB }}</td>
+            <td>{{ info.Address }}</td>
+            <td>{{ info.Phn }}</td>
+            <td>{{ info.Email }}</td>
+            <td>{{ info.LinkedIn }}</td>
+            <td>{{ info.Summary }}</td>
+            <td>{{ info.Certificates }}</td>
+            <td>{{ info.Issuers }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,44 +1,50 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #13072e;
+    background-color: black;
+    /* background-image:  url('cvRontEndImage.webp'); */
 }
-
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #13072e, #3f2182);
+    padding-top: 50px;
 }
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color:white;
+.candidates-details {
+    /* max-width: 600px;
+    margin: 0 auto; */
+    background-color: black;
+    border-radius: 48px;
+    padding: 30px;
+    border: 2px solid white;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* background-color: rgba(255, 255, 255, 0.2); Transparent background color */
+    /* background: linear-gradient(135deg, #13072e, #3f2182); */
 }
+h1{
+    margin-bottom: 30px;
+    color: #fff;
+    font-family:'Courier New', Courier, monospace
 
+}
 label {
+    display: block;
+    margin-bottom: 10px;
     font-weight: bold;
-    color:white;
+    color:  #fff;
 }
 
 input[type="text"],
 input[type="date"],
 textarea {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 18px;
     box-sizing: border-box;
 }
 
-textarea {
+/* textarea {
     height: 100px;
     resize: vertical;
-}
+} */
 .checkbox-group{
     color:white;
 }
@@ -48,59 +54,86 @@ textarea {
 }
 
 button[type="submit"] {
-    background-color: #ffc107;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
+    background-color: black;
+    color:  white;
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px;
+    display: block;
 }
 
 button[type="submit"]:hover {
-    background-color: #e0a800;
+    background-color: white;
+    color: black;
 }
 
 .add-experience {
     margin-top: 20px;
-    background-color: #28a745;
-    color: #fff;
+    background-color: white;
+    color: black;
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
 }
 .navbar {
-    background-color: #0c0223!important; 
-    }
+    background-color: rgba(0, 0, 0, 0)!important; 
+    padding: 1px 400px; /* Adjust padding to decrease width from both corners */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+    margin-top: 10px; /* Move the navbar down */
+}
+
 .navbar-nav .nav-link {
     color: white; /* Change the color of the navbar links */
-    }
+    margin: 0 10px; /* Adjust the space between navbar links */
+}
+
 .navbar-nav .nav-link.active {
-    color: #ffc107; /* Change the color of the active navbar link */
-    }
+    color: white; /* Change the color of the active navbar link */
+}
+
 .navbar-toggler-icon {
     color: white; /* Change the color of the navbar toggler icon */
-    }
-.navbar-brand{
-    color:white;
 }
-  .navbar-toggler {
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-toggler {
     border-color: white; /* Change the color of the navbar toggler button */
-  }
-  .signin button {
-    padding: 2px 10px;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link:not(.signin) {
+    margin-right: 20px; /* Add gap between navbar icons */
+}
+
+.navbar-nav .nav-link.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+
+.signin button {
+    padding: 5px 10px;
     border: 2px solid white;
-    border-radius: 5px;
+    border-radius: 20px;
     font-size: 1rem;
     font-weight: bold;
-    background-color: transparent;
+    background-color: black;
     color:white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     margin: 10px;
 }
 .signin button:hover {
-    background-color: #ffc107;
-    color: white;
+    background-color: #fff;
+    color: black;
 }

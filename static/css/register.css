@@ -1,8 +1,8 @@
-/* Custom Styles for Registration Form */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #13072e;
+    font-family: fantasy;
+    /* background-image: url('cvRontEndImage.webp'); */
+    background-color: black;
+    padding: 10px;
 }
 
 .container {
@@ -10,16 +10,19 @@ body {
 }
 
 .candidates-details {
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: black;
+    border-radius: 48px;
     padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background:linear-gradient(135deg, #13072e, #3f2182);
+    border: 2px solid white; /* Set border color to white */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* background:linear-gradient(135deg, #13072e, #3f2182); */
+    /* background-color: rgba(255, 255, 255, 0.2); Transparent background color */
 }
 
 h1 {
     margin-bottom: 30px;
-    color: #ffc107;
+    color: #fff;
+    font-family:'Courier New', Courier, monospace
 }
 
 form {
@@ -30,7 +33,7 @@ label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
-    color: white;
+    color: #fff;
 }
 p{
     color:white;
@@ -47,16 +50,27 @@ input[type="password"] {
 }
 
 button[type="submit"] {
-    background-color: #007bff;
+    /* background-color: #0e0c70;
     color: #fff;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
+    cursor: pointer; */
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius:  20px; /* Increase border-radius for oval shape */
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: transparent;
+    color: white;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin: 10px;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color:  #fff;
+    color: black;
 }
 
 .flashes {
@@ -78,21 +92,85 @@ button[type="submit"]:hover {
     color: #155724;
     border-color: #c3e6cb;
 }
-.navbar {
-    background-color: #0c0223!important; 
-    }
+.navbar{
+    background-color: rgba(0, 0, 0, 0)!important; 
+    /* padding: [top] [right] [bottom] [left]; */
+    padding: 1px 0px 1px 325px; /* Adjust padding to decrease width from both corners */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+
+}
+
 .navbar-nav .nav-link {
     color: white; /* Change the color of the navbar links */
-    }
+    margin: 0 10px; /* Adjust the space between navbar links */
+}
+
 .navbar-nav .nav-link.active {
-    color: #ffc107; /* Change the color of the active navbar link */
-    }
+    color: white; /* Change the color of the active navbar link */
+}
+
 .navbar-toggler-icon {
     color: white; /* Change the color of the navbar toggler icon */
-    }
-.navbar-brand{
-    color:white;
 }
-  .navbar-toggler {
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-toggler {
     border-color: white; /* Change the color of the navbar toggler button */
-  }
+}
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link:not(.signin) {
+    margin-right: 20px; /* Add gap between navbar icons */
+}
+
+.navbar-nav .nav-link.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+.navbar-nav .nav-item.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+.register-button {
+    display: inline-block;
+    padding:  5px 10px;
+    border: 5px solid #fff;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    text-decoration: none; /* Remove underline */
+    transition: all 0.3s ease-in-out;
+}
+
+.register-button:hover {
+    background-color: white;
+    border-color:white;
+    color:black;
+}
+
+.btn.btn-primary{
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    text-decoration: none; /* Remove underline */
+    transition: all 0.3s ease-in-out;
+}
+
+.btn.btn-primary:hover {
+    background-color: white;
+    border-color:white;
+    color:black;
+}

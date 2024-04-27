@@ -1,47 +1,136 @@
-body { font-family: Arial, sans-serif; background-color: #13072e;} 
-.container { max-width: 600px; margin: 0 auto; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); background: linear-gradient(135deg, #13072e, #3f2182);}
-h2 { text-align: center;
+body {
+    font-family: fantasy;
+    background-color: black;
+    /* background-image:  url('cvRontEndImage.webp'); */
+}
+
+.container {
+    padding-top: 50px;
+}
+.candidates-details {
+    /* max-width: 600px;
+    margin: 0 auto; */
+    background-color: black;
+    border-radius: 48px;
+    padding: 30px;
+    border: 2px solid white;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* background-color: rgba(255, 255, 255, 0.2); Transparent background color */
+    /* background: linear-gradient(135deg, #13072e, #3f2182); */
+}
+h1{
+    margin-bottom: 30px;
+    color: #fff;
+    font-family:'Courier New', Courier, monospace
+
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color:  #fff;
+
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
     margin-bottom: 20px;
-color:white; } 
-label { font-weight: bold;color:white; } 
-input[type="text"],select { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; } 
-button[type="button"] { background-color: #28a745; 
-    color:#fff; padding: 10px 10px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; } 
-button[type="button"]:hover { background-color: #218838; } 
-input[type="submit"] { background-color: #ffc107; color: #fff; padding: 10px 10px; border:
-    none; border-radius: 4px; cursor: pointer; margin-top: 20px; display: block; } 
-input[type="submit"]:hover { background-color: #e0a800; }
-    .navbar {
-        background-color: #0c0223!important; 
-        }
-    .navbar-nav .nav-link {
-        color: white; /* Change the color of the navbar links */
-        }
-    .navbar-nav .nav-link.active {
-        color: #ffc107; /* Change the color of the active navbar link */
-        }
-    .navbar-toggler-icon {
-        color: white; /* Change the color of the navbar toggler icon */
-        }
-    .navbar-brand{
-        color:white;
-    }
-      .navbar-toggler {
-        border-color: white; /* Change the color of the navbar toggler button */
-      }
-      button {
-        padding: 2px 10px;
-        border: 2px solid white;
-        border-radius: 5px;
-        font-size: 1rem;
-        font-weight: bold;
-        background-color: transparent;
-        color:white;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        margin: 10px;
-    }
-    button:hover {
-        background-color: #ffc107;
-        color: white;
-    }
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+button[type="button"] {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+}
+
+button[type="button"]:hover {
+    background-color:  white;
+    color: black;
+}
+
+input[type="submit"] {
+    background-color: black;
+    color:  white;
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+}
+
+input[type="submit"]:hover {
+    background-color:  white;
+    color: black;
+}
+.navbar {
+    background-color: rgba(0, 0, 0, 0)!important; 
+    padding: 1px 400px; /* Adjust padding to decrease width from both corners */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+    margin-top: 10px; /* Move the navbar down */
+}
+
+.navbar-nav .nav-link {
+    color: white; /* Change the color of the navbar links */
+    margin: 0 10px; /* Adjust the space between navbar links */
+}
+
+.navbar-nav .nav-link.active {
+    color: white; /* Change the color of the active navbar link */
+}
+
+.navbar-toggler-icon {
+    color: white; /* Change the color of the navbar toggler icon */
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-toggler {
+    border-color: white; /* Change the color of the navbar toggler button */
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link:not(.signin) {
+    margin-right: 20px; /* Add gap between navbar icons */
+}
+
+.navbar-nav .nav-link.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+
+button {
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin: 10px;
+}
+
+button:hover {
+    background-color:  #fff;
+    color: black;
+}

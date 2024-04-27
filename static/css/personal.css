@@ -1,85 +1,125 @@
-
-        
 body {
-    font-family: Arial, sans-serif;
-    background-color: #13072e;
-    /* padding: 20px; */
+    font-family: fantasy;
+    /* background-image:  url('cvRontEndImage.webp'); */
+    background-color: black;
+    padding: 10px;
 }
-
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #13072e, #3f2182);
+    padding-top: 50px;
+}
+.candidates-details {
+    /* max-width: 600px;
+    margin: 0 auto; */
+    background-color: black;
+    border-radius: 48px;
+    padding: 30px;
+    border: 2px solid white;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* background-color: rgba(255, 255, 255, 0.2); Transparent background color */
+    /* background: linear-gradient(135deg, #13072e, #3f2182); */
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color:white;
-}
-
-label {
+h1{
+    /* font-size: 24px;
     font-weight: bold;
-    color:white;
+    color: white;
+    margin-bottom: 30px; */
+    margin-bottom: 30px;
+    color: #fff;
+    font-family:'Courier New', Courier, monospace
+
+}
+
+label{
+    /* font-weight: bold;
+    color: white; */
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color:  #fff;
+
 }
 
 input[type="text"],
 input[type="date"],
 input[type="tel"],
-input[type="email"],
-textarea {
+input[type="email"],textarea{
     width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 18px;
     box-sizing: border-box;
 }
 
-textarea {
+/* textarea {
     resize: vertical;
-}
-
+} */
 input[type="submit"] {
-    background-color: #ffc107;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border: 2px solid white; /* Set border to white */
+    border-radius: 20px;
     cursor: pointer;
     display: block;
-    margin: 20px auto 0;
+    margin: 10px auto 0;
 }
 
 input[type="submit"]:hover {
-    background-color: #e0a800;
+    background-color: white;
+    color: black;
 }
+
 .navbar {
-    background-color: #0c0223!important; 
-    }
+    /* background-color: rgba(0,0,0,0) !important; /* Transparent background color */
+    /* backdrop-filter: blur(1px); Apply a blur effect to the background */
+    background-color: rgba(0, 0, 0, 0)!important; 
+    padding: 1px 400px; /* Adjust padding to decrease width from both corners */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+      
+} 
+
 .navbar-nav .nav-link {
     color: white; /* Change the color of the navbar links */
-    }
+    margin: 0 10px; /* Adjust the space between navbar links */
+}
+
 .navbar-nav .nav-link.active {
-    color: #ffc107; /* Change the color of the active navbar link */
-    }
+    color: white; /* Change the color of the active navbar link */
+}
+
 .navbar-toggler-icon {
     color: white; /* Change the color of the navbar toggler icon */
-    }
-.navbar-brand{
-    color:white;
 }
-  .navbar-toggler {
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-toggler {
     border-color: white; /* Change the color of the navbar toggler button */
-  }
-  button {
-    padding: 2px 10px;
+}
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link:not(.signin) {
+    margin-right: 20px; /* Add gap between navbar icons */
+}
+
+.navbar-nav .nav-link.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+
+
+button{
+    padding: 5px 10px;
     border: 2px solid white;
-    border-radius: 5px;
+    border-radius: 20px;
     font-size: 1rem;
     font-weight: bold;
     background-color: transparent;
@@ -89,6 +129,6 @@ input[type="submit"]:hover {
     margin: 10px;
 }
 button:hover {
-    background-color: #ffc107;
-    color: white;
+    background-color:  #fff;
+    color: black;
 }

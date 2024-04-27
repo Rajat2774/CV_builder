@@ -24,8 +24,17 @@
                 <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Demo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">FAQ</a>
+          </li>
             </ul>
           </div>
         </div>
@@ -50,7 +59,7 @@
                     {% endfor %}
                 </ul>
                 {% endif %} {% endwith %}
-                <p>Don't have an account? <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a></p>
+                <p>Don't have an account? <a href="{{ url_for('register') }}" class="register-button">Register</a></p>
             </div>
         </div>
     </div>

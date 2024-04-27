@@ -2,68 +2,89 @@
 
   body {
     font-family: Arial, sans-serif;
-    background: #13072e;
+    background-image:  url('cvRontEndImage.webp');
+    /* background:#0c0223; */
 }
 
 .home-container {
     margin-top: 50px;
 }
-
 .home-card {
-    width: 300px;
-    margin: auto;
-    margin-top: 100px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #13072e, #3f2182); /* Gradient background */
-    color: #fff; /* Text color */
+        width: 300px;
+        margin: auto;
+        margin-top: 100px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+        background: rgba(255, 255, 255, 0.8); /* Adjust the opacity as needed */
+        color: blue; /* Text color */
+        backdrop-filter: blur(1px);  /*Apply a blur effect to the background  */
 }
 
 .home-card .card-title {
-    color: #ffc107; /* Title text color */
+    color: #483285; /* Title text color */
 }
 
 .home-card .card-text {
-    color: #f8f9fa; /* Text color */
+    color: #483285; /* Text color */
 }
 .home-card .btn-primary {
-    background-color: #ffc107; /* Button background color */
-    border-color: #ffc107; /* Button border color */
+    background-color: transparent; /* Button background color */
+    border-color: white; /* Button border color */
 }
 
 .home-card .btn-primary:hover {
-    background-color: #e0a800; /* Button background color on hover */
-    border-color: #e0a800; /* Button border color on hover */
+    background-color: rgba(14, 12, 112, 0.5); /* Button background color on hover */
+    border-color: white; /* Button border color on hover */
 }
 
 h1 {
-    color: white;
+    color: #483285;
     text-align: center;
 }
 
 .navbar {
-    background-color: #0c0223!important; 
-    }
+    background-color: rgba(0,0,0,0) !important; /* Transparent background color */
+    backdrop-filter: blur(1px); /* Apply a blur effect to the background */
+}
+
 .navbar-nav .nav-link {
     color: white; /* Change the color of the navbar links */
-    }
+}
+
 .navbar-nav .nav-link.active {
-    color: #ffc107; /* Change the color of the active navbar link */
-    }
+    color: #0e0c70; /* Change the color of the active navbar link */
+}
+
 .navbar-toggler-icon {
     color: white; /* Change the color of the navbar toggler icon */
-    }
-.navbar-brand{
-    color:white;
 }
+
+.navbar-brand {
+    color: white;
+}
+
 .navbar-toggler {
     border-color: white; /* Change the color of the navbar toggler button */
 }
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link:not(.signin) {
+    margin-right: 20px; /* Add gap between navbar icons */
+}
+
+.navbar-nav .nav-link.signin {
+    margin-left: auto; /* Shift the Sign in icon to the right */
+}
+
 button {
     padding: 2px 10px;
     border: 2px solid white;
-    border-radius: 5px;
+    border-radius:  20px; /* Increase border-radius for oval shape */
     font-size: 1rem;
     font-weight: bold;
     background-color: transparent;
@@ -73,6 +94,6 @@ button {
     margin: 10px;
 }
 button:hover {
-    background-color: #ffc107;
+    background-color: #0e0c70;
     color: white;
 }
