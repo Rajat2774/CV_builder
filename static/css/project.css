@@ -58,9 +58,9 @@ textarea {
 button[type="submit"] {
     background-color:black;
     color: #fff;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: 2px solid white;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
     margin-top: 20px;
 }
@@ -78,6 +78,10 @@ button[type="submit"]:hover {
     border-radius: 20px;
     padding: 5px 10px;
     cursor: pointer;
+}
+.add-project:hover{
+    background-color: white;
+    color: black;
 }
 .navbar {
     background-color: black !important; /* Dark navbar background */

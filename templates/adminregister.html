@@ -53,10 +53,8 @@
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-5 text-center candidates-details">
-                <h1>Register</h1>
-                <form action="{{ url_for('register') }}" method="post">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required><br>
+                <h1> Admin Register</h1>
+                <form action="{{ url_for('adminregister') }}" method="post">
                     <label for="email">Email:</label><br>
                     <input type="email" id="email" name="email" required><br><br>
                     <label for="password">Password:</label>
@@ -72,7 +70,7 @@
                 </ul>
                 {% endif %} {% endwith %}
                 <!-- <p>Already have an account? <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></p> -->
-                <p>Already have an account? <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></p>
+                <p>Already have an account? <a href="{{ url_for('adminlogin') }}" class="btn btn-primary">Login</a></p>
 
             </div>
         </div>

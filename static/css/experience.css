@@ -70,13 +70,18 @@ button[type="submit"]:hover {
 }
 
 .add-experience {
-    margin-top: 20px;
+    background-color: black;
+    color:  white;
+    padding: 5px 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+}
+.add-experience:hover{
     background-color: white;
     color: black;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
 }
 .navbar {
     background-color: black !important; /* Dark navbar background */

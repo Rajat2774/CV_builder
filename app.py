@@ -24,6 +24,10 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
+class Admin(db.Model):
+    Adminid=db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.String(128), nullable=False)
 
 class User(db.Model):
     Userid = db.Column(db.Integer, primary_key=True)
@@ -40,6 +44,57 @@ def user_index():
 @app.route("/home")
 def home():
     return render_template("home.html")
+
+@app.route("/features")
+def home():
+    return render_template("features.html")
+
+
+@app.route("/adminlogin", methods=["GET", "POST"])
+def adminlogin():
+    error = None  # Initialize error message
+    if request.method == "POST":
+        email= request.form["email"]
+        password = request.form["password"]
+        admin = Admin.query.filter(
+            (Admin.email ==email)
+        ).first()
+        if admin and admin.password == password:
+            session["admin_id"] = admin.Adminid
+            return redirect(url_for("admindashboard"))
+        else:
+            if not admin:
+                flash("Admin not found. Please try again.")
+            else:
+                flash("Incorrect password. Please try again.")
+    return render_template("adminlogin.html", error=error)
+
+@app.route("/admindashboard")
+def admindashboard():
+    if "admin_id" in session:
+        user_id = session["admin_id"]
+        current_admin = Admin.query.get(user_id)
+        if current_admin:
+            return render_template("dashboard.html", current_admin=current_admin)
+    return redirect(url_for("adminlogin"))
+
+
+@app.route("/adminregister", methods=["GET", "POST"])
+def adminregister():
+    error = None  # Initialize error message
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        if Admin.query.filter_by(email=email).first() is not None:
+            flash("Email address already exists. Please use a different one.", "error")
+        else:
+            new_admin = Admin(email=email,password=password)
+            db.session.add(new_admin)
+            db.session.commit()
+            flash("Registration successful!", "success")
+            return redirect(url_for("Adminlogin"))
+    return render_template("adminregister.html", error=error)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -82,6 +137,10 @@ def register():
             flash("Registration successful!", "success")
             return redirect(url_for("login"))
     return render_template("register.html", error=error)
+
+@app.route('/signin_layout')
+def signin_layout():
+    return render_template('signin_layout.html')
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -451,7 +510,7 @@ def submit_experience():
     db.session.add(experience)
     db.session.commit()
 
-    skills = Skills.query.all()
+    skills = Skills.query.filter_by(CV_ID=cv_id).all()
     return render_template("project.html", skills=skills)
 
 
@@ -488,7 +547,7 @@ def add_skill():
         # Commit all the new skills to the database
         db.session.commit()
 
-        skills = Skills.query.all()
+        skills = Skills.query.filter_by(CV_ID=cv_id).all()
         # Redirect to a success page or render a template
         return render_template("Experience.html", skills=skills)
 
@@ -550,6 +609,9 @@ def submit_project():
 
     return render_template("language.html")
 
+app.route('/faq')
+def faq():
+    return render_template("faq.html")
 
 class Certificates(db.Model):
     CertificateID = db.Column(db.Integer, primary_key=True)
@@ -779,9 +841,10 @@ queries = [
     "SELECT u.username, MAX(julianday(e.end_date) - julianday(e.start_date)) AS Longest_Experience_Duration FROM User AS u JOIN Experience AS e ON u.Userid = e.Userid GROUP BY u.username ORDER BY Longest_Experience_Duration DESC LIMIT 5",
     "SELECT u.username, s.skill_name, COUNT(s.skill_name) AS Skill_Count FROM User AS u JOIN Skills AS s ON u.Userid = s.Userid GROUP BY u.username, s.skill_name ORDER BY Skill_Count DESC LIMIT 5",
     "SELECT u.username, MAX(e.Degree) AS Highest_Education_Level FROM User AS u JOIN Education AS e ON u.Userid = e.Userid GROUP BY u.username",
-    "SELECT AVG(strftime('%Y', 'now') - strftime('%Y', p.DOB)) AS Avg_Age FROM personal_information AS p"
-
-
+    "SELECT AVG(strftime('%Y', 'now') - strftime('%Y', p.DOB)) AS Avg_Age FROM personal_information AS p",
+    "SELECT u.username, p.PrjtName, p.Responsibilities, p.Desc FROM User u JOIN Project p ON u.Userid = p.Userid WHERE p.ProjectID = (SELECT MAX(ProjectID) FROM Project WHERE Userid = u.Userid)",
+    "SELECT u.username, COUNT(DISTINCT s.skill_name) AS Unique_Skills FROM User u JOIN Skills s ON u.Userid = s.Userid GROUP BY u.username ORDER BY Unique_Skills DESC;",
+    "SELECT (SELECT COUNT(*) FROM User) AS Total_Users,(SELECT COUNT(*) FROM CV) AS Total_CVs;"
 
 
 
@@ -810,7 +873,10 @@ query_names = [
     "19. Query to Find Users with the Longest Experience Duration",
     "20. Query to Retrieve Users with the Most Common Skill Name",
     "21. Query to Retrieve Users with the Highest Education Level",
-    "22. Query to Calculate the Average Age of Users"
+    "22. Query to Calculate the Average Age of Users",
+    "23. Retrieve Users with the Most Recent Project",
+    "24. Retrieve Users with the Most Varied Skillset",
+    "25. Query to count the number of users and CVs in the database"
 
 
 ]

@@ -1,0 +1,88 @@
+body{
+    font-family:'Franklin Gothic Medium';
+    background: black; /* Light background color */
+    padding:20px;
+}
+.row.justify-content-center {
+    margin-top: 50px;
+}
+
+
+/* Style for each sign-in option */
+
+.signin-option {
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.signin-option+.signin-option {
+    margin-left: 20px;
+}
+
+.admin-signin {
+    background-color:black;
+    color: white;
+}
+h2{
+    color: #ffc107;
+}
+.voter-signin {
+    background-color: black;
+    color: white;
+}
+.navbar-nav .signin button {
+    background-color: black; /* Button background color */
+    border: 1px solid white; /* Button border color */
+    color: white; /* Button text color */
+    border-radius: 20px;
+    padding:5px 10px;
+}
+
+.navbar-nav .signin button:hover {
+    color: black; /* Button text color on hover */
+    background-color: white; /* Button background color on hover */
+}
+.btn-primary {
+    background-color: black; /* Button background color */
+    border-color: white; /* Button border color */
+    color: white; /* Button text color */
+}
+
+.btn-primary:hover {
+    color: black; /* Button text color on hover */
+    background-color: white; /* Button background color on hover */
+    border-color: black; /* Button border color on hover */
+}
+
+.navbar{
+    background-color: black !important; /* Dark navbar background */
+    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
+    border: 2px solid white;
+    border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+    margin: 0 auto; /* Center the navbar */
+    max-width: 800px; /* Set a maximum width for the navbar */
+}
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #fff; /* Navbar text color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffc107; /* Navbar text color on hover */
+}
+
+/* Change color of the active navbar link */
+.navbar-nav .nav-link.active {
+    color: white;
+}
+
+.navbar-toggler-icon {
+    color: #fff; /* Navbar toggler icon color */
+}
+.container {
+    text-align: justify;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
