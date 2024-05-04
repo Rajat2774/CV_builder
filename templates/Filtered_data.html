@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Filtered Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>LinkedIn</th>
+            </tr>
+        </thead>
+        <tbody id="filteredData">
+            <!-- Filtered data will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch filtered data from the server and display it in the table
+        function fetchFilteredData() {
+            var personalInfo = document.getElementById('personalInfo').value;
+
+            fetch('/get_personal_info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ personalInfo: personalInfo })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var filteredDataBody = document.getElementById('filteredData');
+                filteredDataBody.innerHTML = '';
+
+                data.forEach(item => {
+                    var row = filteredDataBody.insertRow();
+                    row.insertCell(0).textContent = item.first_name;
+                    row.insertCell(1).textContent = item.last_name;
+                    row.insertCell(2).textContent = item.dob;
+                    row.insertCell(3).textContent = item.address;
+                    row.insertCell(4).textContent = item.phone;
+                    row.insertCell(5).textContent = item.linkedin;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Call the fetchFilteredData function when the page loads
+        fetchFilteredData();
+    </script>
+</body>
+</html>

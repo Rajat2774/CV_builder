@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Filters</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/adminlogin.css' )}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>CV Filters</h2>
+        <form action="/apply_filters" method="POST">
+            <label for="completionStatus">Completion Status:</label>
+            <select id="completionStatus" name="completionStatus">
+                <option value="">Select</option>
+                <option value="complete">Complete</option>
+                <option value="inProgress">In Progress</option>
+                <option value="">All</option>
+            </select>
+
+            <label for="personalInfo">Personal Info:</label>
+            <select id="personalInfo" name="personalInfo">
+                <option value="">Select</option>
+                <option value="fname">First Name</option>
+                <option value="lname">Last Name</option>
+                <option value="dob">DOB</option>
+                <option value="address">Address</option>
+                <option value="phone">Phone</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="">All</option>
+            </select>
+
+            <label for="education">Education:</label>
+            <select id="education" name="education">
+                <option value="">Select</option>
+                <option value="degree">Degree</option>
+                <option value="school">School/University</option>
+                <option value="fieldOfStudy">Study Field</option>
+                <option value="graduationDate">Graduation Date</option>
+                <option value="">All</option>
+            </select>
+
+            <!-- Add more filter options here -->
+
+            <div id="dynamicFields"></div>
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('select').change(function() {
+                var selectedOption = $(this).val();
+                if (selectedOption !== "") {
+                    $('#dynamicFields').append('<input type="text" name="dynamicField" placeholder="Enter value"><br>');
+                } else {
+                    $('#dynamicFields').empty();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

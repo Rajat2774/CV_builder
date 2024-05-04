@@ -15,6 +15,7 @@ from flask import jsonify
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 import sqlite3
+from sqlalchemy import or_
 
 
 app = Flask(__name__)
@@ -45,9 +46,9 @@ def user_index():
 def home():
     return render_template("home.html")
 
-@app.route("/features")
-def home():
-    return render_template("features.html")
+# @app.route("/features")
+# def home():
+#     return render_template("features.html")
 
 
 @app.route("/adminlogin", methods=["GET", "POST"])
@@ -894,6 +895,153 @@ def custom_query():
     connection.close()
     return render_template("custom.html", data=answers)
 
+
+
+
+@app.route('/filter', methods=['GET', 'POST'])
+def filter_experience():
+    if request.method == 'POST':
+        query = db.session.query(User, Experience, PersonalInformation, Language, Skills).\
+                join(Experience, User.Userid == Experience.Userid).\
+                join(PersonalInformation, User.Userid == PersonalInformation.Userid).\
+                join(Language, User.Userid == Language.Userid).\
+                join(Skills, User.Userid == Skills.Userid)
+
+        experience_title = request.form.get('experience_title',None)
+        experience_location = request.form.get('experience_location',None)
+        first_name = request.form.get('first_name',None)
+        language = request.form.get('language',None)
+        skill = request.form.get('skill',None)
+        proficiency = request.form.get('proficiency',None)
+        lang_proficiency=request.form.get('lang_proficiency',None)
+        last_name = request.form.get('last_name',None)
+        address = request.form.get('address',None)
+        education_degree = request.form.get('education_degree',None)
+        field_of_study = request.form.get('field_of_study',None)
+        
+        if experience_title:
+            query = query.filter(Experience.title.ilike(f"%{experience_title}%"))
+        if experience_location:
+            query = query.filter(Experience.location.ilike(f"%{experience_location}%"))
+        if first_name:
+            query = query.filter(PersonalInformation.Fname.ilike(f"%{first_name}%"))
+        if last_name:
+            query = query.filter(PersonalInformation.Lname.ilike(f"%{last_name}%"))
+        if address:
+            query = query.filter(PersonalInformation.Address.ilike(f"%{address}%"))
+        if education_degree:
+            query = query.filter(Education.Degree==education_degree)
+        if field_of_study:
+            query = query.filter(Education.FieldofStudy.ilike(f"%{field_of_study}%"))
+        if language:
+            query = query.filter(Language.LangName==language)
+        if lang_proficiency:
+            query = query.filter(Language.Proficiency_Lang==lang_proficiency)
+        if skill:
+            query = query.filter(Skills.skill_name.ilike(f"%{skill}%"))
+        if proficiency:
+            query = query.filter(Skills.proficiency.ilike(f"%{proficiency}%"))
+
+        unique_users = set()
+        filtered_results = []
+        for user, personal_info, experience, language, skill in query.all():
+            if user.Userid not in unique_users:
+                filtered_results.append((user, personal_info, experience, language, skill))
+                unique_users.add(user.Userid)
+
+    return render_template('filters.html', results=filtered_results)
+
+
+
+
+@app.route('/apply_filters', methods=['GET','POST'])
+def apply_filters():
+    if request.method == 'POST':
+        # Retrieve filter criteria from the form
+        # completion_status = request.form.get('completionStatus')
+        personal_info = request.form.get('personalInfo')
+        # education = request.form.get('education')
+        # Add more filter criteria here if needed
+
+        # Construct the query based on the filter criteria
+        query = PersonalInformation.query
+
+        
+        if personal_info:
+            # Check if the personal_info field is valid
+            if personal_info in ['Fname', 'Lname', 'DOB', 'Address', 'Phn', 'LinkedIn']:
+                query = query.filter(getattr(PersonalInformation, personal_info) != None)
+            else:
+                # Handle invalid personal_info attribute
+                flash('Invalid personal information attribute selected.', 'error')
+
+
+        
+        # Add more filter conditions as needed
+
+        # Execute the query and retrieve the filtered data
+        filtered_data = query.all()
+
+        # Pass the filtered data to the template for display
+    return render_template("filtered_data.html", data=filtered_data)
+    # return render_template("filter.html")
+
+
+#query vansh
+@app.route('/get_personal_info_by_fname', methods=['POST'])
+def get_personal_info_by_fname():
+    if request.method == 'POST':
+        # Get the first name input from the HTML form
+        fname = request.form.get('fname')
+
+        # Execute the select query with the first name parameter
+        users_with_personal_info = (
+            db.session.query(
+                User,
+                CV.Title,
+                PersonalInformation.Fname,
+                PersonalInformation.Lname,
+                PersonalInformation.DOB,
+                PersonalInformation.Address,
+                PersonalInformation.Phn,
+                PersonalInformation.Email,
+                PersonalInformation.LinkedIn,
+                PersonalInformation.Summary,
+            )
+            .join(CV, User.Userid == CV.Userid)
+            .join(PersonalInformation, CV.CV_ID == PersonalInformation.CV_ID)
+            .filter(PersonalInformation.Fname == fname)  # Filter by Fname
+            .all()
+        )
+
+        # Process the results as needed
+        # You can return the results or perform further operations here
+        return render_template("filtered_data.html", data=users_with_personal_info)
+
+@app.route('/get_personal_info', methods=['POST'])
+def get_personal_info():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('./instance/cvbuilder.db')
+    cursor = conn.cursor()
+
+    # Get the name input from the HTML form
+    fname = request.form.get('Fname')
+
+    # Execute the query with the name parameter
+    cursor.execute("SELECT Fname FROM PersonalInformation WHERE Fname = ?", (fname,))
+
+    # Fetch the result
+    result = cursor.fetchone()
+
+    # Close the database connection
+    conn.close()
+
+    # Return the result to the client
+    return render_template("filtered_data.html", fname=result[0] if result else "Name not found")
+
+@app.route('/filters')
+def filters():
+    return render_template('Filter.html')
 
 if __name__ == "__main__":
     with app.app_context():
