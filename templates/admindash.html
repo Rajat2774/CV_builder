@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Adjust the width of input fields */
+        .list-group-item input[type="text"] {
+            width: calc(100% - 30px);
+            border-radius: 8px;
+        }
+
+        /* Adjust margin and padding */
+        .list-group-item {
+            margin-bottom: 10px;
+            color: white;
+            border: 2px solid white;
+            background-color: black;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        /* Style for filter labels */
+        .filter-label {
+            font-weight: bold;
+            color: #ffc107;
+            font-family: 'Franklin Gothic Medium';
+        }
+
+        h1 {
+            color: #ffc107;
+            font-family: 'Franklin Gothic Medium';
+        }
+
+        th, tr, td {
+            font-family: cursive;
+        }
+
+        .card {
+            background-color: #343a40;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #ffc107;
+            color: black;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background-color: black;
+            border-color: white;
+            border-radius: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: black;
+        }
+
+        .navbar {
+            background-color: black !important; /* Dark navbar background */
+            padding: 5px 100px; /* Adjust padding to reduce width from both sides */
+            border: 2px solid white;
+            border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
+            margin: 0 auto; /* Center the navbar */
+            max-width: 800px; /* Set a maximum width for the navbar */
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff; /* Navbar text color */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffc107; /* Navbar text color on hover */
+        }
+
+        /* Change color of the active navbar link */
+        .navbar-nav .nav-link.active {
+            color: white;
+        }
+
+        .navbar-toggler-icon {
+            color: #fff; /* Navbar toggler icon color */
+        }
+
+        .navbar-brand {
+            color: white;
+        }
+
+        .navbar-brand:hover {
+            color: white; /* Set the color to the default color */
+            text-decoration: none; /* Remove any text decoration */
+        }
+
+        .navbar-nav .signin button {
+            background-color: black; /* Button background color */
+            border: 1px solid white; /* Button border color */
+            color: white; /* Button text color */
+            border-radius: 20px;
+            padding: 5px 10px;
+            margin-right: 10px; /* Add margin to the right of the button */
+        }
+
+        .navbar-nav .signin button:hover {
+            color: black; /* Button text color on hover */
+            background-color: white; /* Button background color on hover */
+        }
+
+        /* Style for professional statistics */
+        .statistics {
+            background-color: #343a40;
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .statistics h2 {
+            color: #ffc107;
+            font-family: 'Franklin Gothic Medium';
+            margin-bottom: 10px;
+        }
+
+        .statistics p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .statistics-symbol {
+            color: #ffc107;
+            font-size: 36px;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">CV Builder</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{url_for('home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Demo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+            </ul>
+        </div>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item signin">
+                <form action="{{ url_for('adminlogout') }}" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h1 class="text-center mt-4 mb-4">Admin Dashboard</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    FILTERS
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h5 class="filter-label">Experience Filter</h5>
+                                <a data-toggle="collapse" href="#experienceFilter" aria-expanded="true"
+                                   aria-controls="experienceFilter">Experience</a>
+                                <div class="collapse show" id="experienceFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><label>Title:</label><input type="text"
+                                                                                                 name="experience_title"
+                                                                                                 placeholder="Enter Title">
+                                        </li>
+                                        <li class="list-group-item"><label>Location:</label><input type="text"
+                                                                                                    name="experience_location"
+                                                                                                    placeholder="Enter Location">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <h5 class="filter-label">Personal Info Filter</h5>
+                                <a data-toggle="collapse" href="#personalInfoFilter" aria-expanded="false"
+                                   aria-controls="personalInfoFilter">Personal Information</a>
+                                <div class="collapse" id="personalInfoFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><label>First Name:</label><input type="text"
+                                                                                                     name="first_name"
+                                                                                                     placeholder="First Name">
+                                        </li>
+                                        <li class="list-group-item"><label>Last Name:</label><input type="text"
+                                                                                                    name="last_name"
+                                                                                                    placeholder="Last Name">
+                                        </li>
+                                        <li class="list-group-item"><label>Location:</label><input type="text"
+                                                                                                    name="address"
+                                                                                                    placeholder="Location">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <h5 class="filter-label">Education Filter</h5>
+                                <a data-toggle="collapse" href="#EducationFilter" aria-expanded="false"
+                                   aria-controls="EducationFilter">Education</a>
+                                <div class="collapse" id="EducationFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><label>Degree:</label><input type="text"
+                                                                                                  name="education_degree"
+                                                                                                  placeholder="Degree">
+                                        </li>
+                                        <li class="list-group-item"><label>Field Of Study:</label><input type="text"
+                                                                                                        name="field_of_study"
+                                                                                                        placeholder="Field">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <h5 class="filter-label">Skill Filter</h5>
+                                <a data-toggle="collapse" href="#skillFilter" aria-expanded="false"
+                                   aria-controls="skillFilter">Skill</a>
+                                <div class="collapse" id="skillFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><label>Skill:</label><input type="text"
+                                                                                                name="skill"
+                                                                                                placeholder="Enter Skill Name">
+                                        </li>
+                                        <li class="list-group-item"><label>Proficiency:</label><input type="text"
+                                                                                                      name="proficiency"
+                                                                                                      placeholder="Enter Proficiency">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <h5 class="filter-label">Language Filter</h5>
+                                <a data-toggle="collapse" href="#languageFilter" aria-expanded="false"
+                                   aria-controls="languageFilter">Language</a>
+                                <div class="collapse" id="languageFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><label>Language:</label><input type="text"
+                                                                                                    name="language"
+                                                                                                    placeholder="Enter Language Name">
+                                        </li>
+                                        <li class="list-group-item"><label>Proficiency:</label><input type="text"
+                                                                                                       name="lang_proficiency"
+                                                                                                       placeholder="Enter Proficiency">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- Inside the form -->
+                            <li class="list-group-item">
+                                <h5 class="filter-label">CV Filter</h5>
+                                <a data-toggle="collapse" href="#cvFilter" aria-expanded="false"
+                                   aria-controls="cvFilter">CV
+                                    Count</a>
+                                <div class="collapse" id="cvFilter">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <label>CV Count Range:</label>
+                                            <select name="cv_range" class="custom-select">
+                                                <option value="">Select CV Range</option>
+                                                <option value="1-3">1-3 CVs</option>
+                                                <option value="3-5">3-5 CVs</option>
+                                                <option value="5+">More than 5 CVs</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="statistics">
+                <h2><span class="statistics-symbol">&#128202;</span>Statistics</h2>
+                <p>Number of Users: <span>{{ num_users }}</span></p>
+                <p>Number of CVs: <span>{{ num_cvs }}</span></p>
+            </div>
+            <h1 class="mb-4">Filtered Data</h1>
+            {% for user, experience, personal_info, language, skill in results %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.username }}</h5>
+                    <!-- Display other user information here -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

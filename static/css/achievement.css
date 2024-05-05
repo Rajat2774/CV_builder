@@ -77,7 +77,7 @@ input[type="submit"]:hover {
     max-width: 800px; /* Set a maximum width for the navbar */
 }
 
-.navbar-brand,
+
 .navbar-nav .nav-link {
     color: #fff; /* Navbar text color */
 }
@@ -85,10 +85,17 @@ input[type="submit"]:hover {
 .navbar-nav .nav-link:hover {
     color: #ffc107; /* Navbar text color on hover */
 }
+.navbar-brand {
+    color: white;
+}
 
+.navbar-brand:hover {
+    color: white; /* Set the color to the default color */
+    text-decoration: none; /* Remove any text decoration */
+}
 /* Change color of the active navbar link */
 .navbar-nav .nav-link.active {
-    color: #00f;
+    color: #ffc107;
 }
 
 .navbar-toggler-icon {

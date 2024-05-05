@@ -1,3 +1,12 @@
+<!-- CV.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s CV</title>
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
+</head>
 <body>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
@@ -28,20 +37,14 @@
         </div>
         <div class="right">
             <div class="inner">
-                
-                
                 <section>
-                  
-                    <h1><span class="fas fa-graduation-cap"></span> Education</h1>
+                    <h1>Education</h1>
                     {% for edu in education %}
                     <p>{{ edu.Degree }} - {{ edu.School }} ({{ edu.Grad_date }})</p>
                     {% endfor %}
-                </section>
-                
-                
+                </section>            
             </div>
             <section>
-               
                 <h1>Skills</h1>
                 <ul class="skill-set">
                     {% for skill in skills %}
@@ -50,7 +53,6 @@
                 </ul>
             </section>
             <section>
-                
                 <h1>Interests</h1>
                 <ul class="skill-set">
                     {% for interest in interests %}
@@ -78,97 +80,116 @@
     </div>
     <style>
         /* General styling */
-       /* General styling */
-body {
-    background-color: #aac1d6; /* white background */
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+        body {
+           
+            background-color:#aec6da;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-/* Wrapper styling */
-.wrapper {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Increased shadow */
-}
+        /* Wrapper styling */
+        .wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
 
-/* Left side styling */
-.left {
-    flex: 1;
-    padding: 20px;
-}
+        /* Left side styling */
+        .left {
+            flex: 1;
+            padding: 20px;
+        }
 
-.me-img img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+        .me-img img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
 
-.name-text h1 {
-    color: #084782; /* red text */
-    margin: 10px 0;
-}
+        .name-text h1 {
+            color: #0c457d; /* red text */
+            margin: 10px 0;
+        }
 
-.name-text p {
-    color: black; /* red text */
-}
+        .name-text p {
+            color: black; /* red text */
+        }
 
-/* Right side styling */
-.right {
-    flex: 2;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Increased shadow */
-}
+        /* Right side styling */
+        .right {
+            flex: 2;
+            padding: 20px;
+        }
 
-/* Section styling */
+        /* Section styling */
+        section {
+            background-color: #e7decc;
+            /*background: red; */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section h1 {
+            color: #0c457d; /* red heading */
+        }
+
+        /* Project image styling */
+        .work-img img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* List styling */
+        .skill-set,
+        .achievement-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .skill-set li,
+        .achievement-list li {
+            margin-bottom: 10px;
+        }
+
+        .skill-set li:before {
+            content: '\2022'; /* bullet point */
+            color: #0c457d; /* red bullet */
+            font-size: 15px;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #ff4d4d; /* red footer */
+            color: #ffffff; /* white text */
+            text-align: center;
+            padding: 20px;
+        }
+        /* Section styling */
 section {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Increased shadow */
+}
+
+/* Project, skill, and interest card styling */
+.project-card,
+.skill-card,
+.interest-card {
     background-color: #e7decc;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Increased shadow */
-}
-
-section h1 {
-    color: #084782; /* red heading */
-}
-
-/* Project image styling */
-.work-img img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* List styling */
-.skill-set,
-.achievement-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.skill-set li,
-.achievement-list li {
-    margin-bottom: 10px;
-}
-
-.skill-set li:before {
-    content: '\2022'; /* bullet point */
-    color: #ff4d4d; /* red bullet */
-    font-size: 15px;
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-}
-
-/* Footer styling */
-footer {
-    background-color: #ff4d4d; /* red footer */
-    color: #ffffff; /* white text */
-    text-align: center;
-    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Increased shadow */
 }
 
     </style>
 </body>
+</html>
