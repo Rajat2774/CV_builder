@@ -1,0 +1,76 @@
+/* resume.css */
+
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    color:yellow;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Left section */
+.left {
+    float: left;
+    width: 30%;
+}
+
+.me-img {
+    text-align: center;
+}
+
+.me-img img {
+    border-radius: 50%;
+    max-width: 100%;
+}
+
+.name-text h1 {
+    margin-top: 0;
+}
+
+.name-text p {
+    margin-bottom: 5px;
+}
+
+/* Right section */
+.right {
+    float: right;
+    width: 65%;
+}
+
+.right h1 {
+    margin-top: 0;
+}
+
+/* Inner section */
+.inner {
+    margin-bottom: 20px;
+}
+
+/* Skill set */
+.skill-set {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Interests */
+.interest {
+    margin-top: 20px;
+}
+
+.interest img {
+    max-width: 100%;
+}
+
+/* Achievements */
+section:last-child {
+    margin-bottom: 0;
+}

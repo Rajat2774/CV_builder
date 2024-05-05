@@ -89,7 +89,8 @@ button[type="submit"]:hover {
     color: #155724;
     border-color: #c3e6cb;
 }
-.navbar {
+
+.navbar{
     background-color: black !important; /* Dark navbar background */
     padding: 5px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
@@ -97,26 +98,30 @@ button[type="submit"]:hover {
     margin: 0 auto; /* Center the navbar */
     max-width: 800px; /* Set a maximum width for the navbar */
 }
-.navbar-brand {
-    color: white;
-}
-.navbar-toggler-icon{
-    color: white;
-}
+
+.navbar-brand,
 .navbar-nav .nav-link {
-    color: white;
-    margin: 0 10px;
+    
+    color: #fff; /* Navbar text color */
+    margin-right: 20px; /* Add margin to the right of each navbar item */
+
 }
+
+.navbar-nav .nav-link:hover {
+    color: #ffc107; /* Navbar text color on hover */
+}
+
+/* Change color of the active navbar link */
 .navbar-nav .nav-link.active {
-    color: white;
+    color: #00f;
 }
-.navbar-toggler{
-    border-color: #fff;
+
+.navbar-toggler-icon {
+    color: #fff; /* Navbar toggler icon color */
 }
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.container {
+    padding-top: 50px;
 }
 
 

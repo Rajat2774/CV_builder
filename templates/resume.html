@@ -1,54 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume</title>
-    <link rel="stylesheet" href="resumeStyle.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="resume.css">
+    <style>
+        /* CSS for left part */
+        .left {
+            float: left;
+            width: 40%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .name-hero {
+            display: flex;
+            align-items: center;
+        }
+
+        .name-text {
+            margin-left: 20px;
+        }
+
+        /* CSS for right part */
+        .right {
+            float: right;
+            width: 60%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .inner {
+            margin-bottom: 20px;
+        }
+
+        .interest {
+            margin-top: 20px;
+        }
+
+        .work-img {
+            margin-bottom: 20px;
+        }
+
+        /* Clearfix for wrapper */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
 </head>
+
 <body>
-    <div id="resume">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/james-moriarty.jpg" alt="James Moriarty">
-        <h1>{{ personal_info.Fname }} {{ personal_info.Lname }}</h1>
-        <p>Cell: <a href="#">{{ personal_info.Phn }}</a></p>
-        <p>Email: <a href="#">{{ personal_info.Email }}</a></p>
-        <p id="objective">{{ personal_info.Summary }}</p>
-        <dl>
-            <dt>Education</dt>
-            <dd>
-                <h2>{{ personal_info.Education }}</h2>
-                <p><strong>Major:</strong> {{ personal_info.Major }}<br/>
-                <strong>Minor:</strong> {{ personal_info.Minor }}</p>
-            </dd>
-        </dl>
-        <dl>
-            <dt>Skills</dt>
-            <dd>
-                <h2>{{ personal_info.Skills }}</h2>
-                <p>{{ personal_info.Skills_Description }}</p>
-            </dd>
-        </dl>
-        <dl>
-            <dt>Experience</dt>
-            <dd>
-                {% for experience in personal_info.Experiences %}
-                <h2>{{ experience.title }}<span>{{ experience.location }} {{ experience.start_date }} – {{ experience.end_date }}</span></h2>
-                <ul>
-                    <li>{{ experience.description }}</li>
+    <div class="wrapper clearfix">
+        <div class="left">
+            <div class="name-hero">
+                <div class="me-img">
+                    <img src="http://images2.fanpop.com/images/photos/4700000/Codeman-cody-lambert-4776780-500-375.jpg" alt="Cody Man">
+                </div>
+                <div class="name-text">
+                    <h1>{{ personal_info.Fname }} <em>{{ personal_info.Lname }}</em></h1>
+                    <p>{{ personal_info.Address }}</p>
+                    <p>{{ personal_info.Email }}</p>
+                    <p>{{ personal_info.Phn }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="experience-container">
+                <section>
+                    <h1>Experience</h1>
+                    {% for exp in experience %}
+                    <p>{{ exp.start_date }} - {% if exp.end_date %}{{ exp.end_date }}{% else %}Present{% endif %} <em>{{ exp.title }} at {{ exp.company }}</em></p>
+                    <p>{{ exp.description }}</p>
+                    {% endfor %}
+                </section>
+            </div>
+            <div class="inner">
+                <section>
+                    <h1>Education</h1>
+                    {% for edu in education %}
+                    <p>{{ edu.Degree }} - {{ edu.School }} ({{ edu.Grad_date }})</p>
+                    {% endfor %}
+                </section>
+            </div>
+            <section>
+                <h1>Skills</h1>
+                <ul class="skill-set">
+                    {% for skill in skills %}
+                    <li>{{ skill.skill_name }}- {{ skill.proficiency }}</li>
+                    {% endfor %}
                 </ul>
+            </section>
+            <section>
+                <h1>Interests</h1>
+                <ul class="skill-set">
+                    {% for interest in interests %}
+                    <li>{{ interest.interest_name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section>
+                <h1>Languages</h1>
+                {% for lan in languages %}
+                <p>{{ lan.LangName }} - {{ lan.Proficiency_Lang }}</p>
                 {% endfor %}
-            </dd>
-        </dl>
-        <dl>
-            <dt>Interests</dt>
-            <dd>
-                <p>{{ personal_info.Interests }}</p>
-            </dd>
-        </dl>
-        <dl>
-            <dt>References</dt>
-            <dd>{{ personal_info.References }}</dd>
-        </dl>
+            </section>
+            <div class="interest">
+                <div class="work-img">
+                    <img src="data:image/png;base64,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">
+                </div>
+                <section>
+                    <h1>Projects</h1>
+                    {% for prjt in projects %}
+                    <p>{{ prjt.PrjtName }}</p>
+                    <p>{{ prjt.Desc }}-{{ prjt.Responsibilities }}</p>
+                    {% endfor %}
+                </section>
+            </div>
+            <section>
+                <h1>Achievements</h1>
+                {% for ach in achievements %}
+                <p>{{ ach.desc }}</em></p>
+                {% endfor %}
+            </section>
+        </div>
     </div>
 </body>
+
 </html>

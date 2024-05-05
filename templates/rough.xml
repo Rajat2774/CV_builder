@@ -1,0 +1,150 @@
+rough.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Filters</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/adminlogin.css' )}}">
+
+        
+</head>
+<body>
+    <div class="container">
+        <h2>CV Filters</h2>
+        <form id="filterForm">
+            <label for="userType">User Type:</label>
+            <select id="userType">
+                <option value="">All</option>
+                <option value="jobSeeker">Job Seeker</option>
+                <option value="recruiter">Recruiter</option>
+                <option value="employer">Employer</option>
+            </select>
+
+            <label for="completionStatus">Completion Status:</label>
+            <select id="completionStatus">
+                <option value="">All</option>
+                <option value="complete">Complete</option>
+                <option value="inProgress">In Progress</option>
+            </select>
+
+            <label for="prns_info">person info</label>
+            <select id="prsn_info">
+                <option value ="">All</option>
+                <option value="">Fname</option>
+                <option value="">Lname</option> 
+                <option value="">DOB</option> <!--like-->
+                <option value="">Address</option>  <!--born address-->
+                <option value="">Phn</option>  <!--like -->
+                <option value="">LinkedIn</option> <!--profile or not-->
+            </select>
+
+            <!--User-->
+            <label for="education">Education</label>
+            <select id="education">
+                <option value="Degree">Degree</option>
+                <option value="School">School/University</option>
+                <option value="FieldofStudy">study field</option>
+                <option value="Grad_date">Graduation </option> <!--graduation completed or not-->
+                
+            </select>
+
+            <!--Language-->
+            <label for="Language">language</label>
+            <select id="Language">
+                <option value="LangName">LangName</option>
+                <option value="Proficiency_Lang">Proficiency</option>
+            </select>
+
+            <!--interest-->
+            <label for="Interest">Interest</label>
+            <select id="Interest">
+                <option value="interest_name">ALL</option>
+            </select>
+
+            <!---->
+            <!-- education -->
+            <label for="Education">Education</label>
+            <select id="Education">
+                <option value ="">All</option>
+                <option value=""></option>
+
+            </select>
+            <!-- Add more filter options here -->
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adminLogin</title>
+</head>
+<body>
+    <h1>Filters</h1>
+    <form>
+        <label for="education">Education Level:</label>
+        <select id="education" name="education">
+            <option value="">Choose an education level</option>
+            <!-- Education levels will be dynamically populated here using Flask/Jinja2 -->
+            {% for level in education_levels %}
+                <option value="{{ level }}">{{ level }}</option>
+            {% endfor %}
+            <!-- Option for user to write their own education level -->
+            <option value="other">Other (Write your own)</option>
+        </select>
+
+        <!-- Input field for user's custom education level -->
+        <input type="text" id="custom_education" name="custom_education" placeholder="Enter your education level" style="display: none;">
+        
+        <label for="fname">First Name:</label>
+        <select id="fname" name="fname">
+            <option value="">Choose your first name</option>
+            <!-- First names will be dynamically populated here using Flask/Jinja2 -->
+            {% for name in first_names %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+            <!-- Option for user to write their own first name -->
+            <option value="other">Other (Write your own)</option>
+        </select>
+        <!-- Input field for user's custom first name -->
+        <input type="text" id="custom_fname" name="custom_fname" placeholder="Enter your first name" style="display: none;">
+
+        <label for="lname">Last Name:</label>
+        <select id="lname" name="lname">
+            <option value="">Choose your last name</option>
+            <!-- Last names will be dynamically populated here using Flask/Jinja2 -->
+            {% for name in last_names %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+            <!-- Option for user to write their own last name -->
+            <option value="other">Other (Write your own)</option>
+        </select>
+        <!-- Input field for user's custom last name -->
+        <input type="text" id="custom_lname" name="custom_lname" placeholder="Enter your last name" style="display: none;">
+
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // JavaScript to show/hide the input field based on the selected option
+        document.getElementById('education').addEventListener('change', function() {
+            var customEducationInput = document.getElementById('custom_education');
+            if (this.value === 'other') {
+                customEducationInput.style.display = 'block';
+            } else {
+                customEducationInput.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

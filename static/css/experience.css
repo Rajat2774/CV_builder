@@ -83,7 +83,8 @@ button[type="submit"]:hover {
     background-color: white;
     color: black;
 }
-.navbar {
+
+.navbar{
     background-color: black !important; /* Dark navbar background */
     padding: 5px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
@@ -92,32 +93,28 @@ button[type="submit"]:hover {
     max-width: 800px; /* Set a maximum width for the navbar */
 }
 
+.navbar-brand,
 .navbar-nav .nav-link {
-    color: white; /* Change the color of the navbar links */
-    margin: 0 10px; /* Adjust the space between navbar links */
+    color: #fff; /* Navbar text color */
 }
 
+.navbar-nav .nav-link:hover {
+    color: #ffc107; /* Navbar text color on hover */
+}
+
+/* Change color of the active navbar link */
 .navbar-nav .nav-link.active {
-    color: white; /* Change the color of the active navbar link */
+    color: #00f;
 }
 
 .navbar-toggler-icon {
-    color: white; /* Change the color of the navbar toggler icon */
+    color: #fff; /* Navbar toggler icon color */
 }
 
-.navbar-brand {
-    color: white;
+.container {
+    padding-top: 50px;
 }
 
-.navbar-toggler {
-    border-color: white; /* Change the color of the navbar toggler button */
-}
-
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .navbar-nav .nav-link:not(.signin) {
     margin-right: 20px; /* Add gap between navbar icons */
