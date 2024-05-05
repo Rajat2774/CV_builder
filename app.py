@@ -70,13 +70,77 @@ def adminlogin():
                 flash("Incorrect password. Please try again.")
     return render_template("adminlogin.html", error=error)
 
-@app.route("/admindashboard")
+@app.route("/admindashboard",methods=['GET', 'POST'])
 def admindashboard():
     if "admin_id" in session:
-        user_id = session["admin_id"]
-        current_admin = Admin.query.get(user_id)
+        admin_id = session["admin_id"]
+        current_admin = Admin.query.get(admin_id)
         if current_admin:
-            return render_template("dashboard.html", current_admin=current_admin)
+            filtered_results = []
+            if request.method == 'POST':
+                query = db.session.query(User, PersonalInformation, Experience, Language, Skills).\
+                    outerjoin(PersonalInformation, User.Userid == PersonalInformation.Userid).\
+                    outerjoin(Experience, User.Userid == Experience.Userid).\
+                    outerjoin(Language, User.Userid == Language.Userid).\
+                    outerjoin(Skills, User.Userid == Skills.Userid).\
+                    outerjoin(CV, User.Userid == CV.Userid)
+
+                experience_title = request.form.get('experience_title',None)
+                experience_location = request.form.get('experience_location',None)
+                first_name = request.form.get('first_name',None)
+                language = request.form.get('language',None)
+                skill = request.form.get('skill',None)
+                proficiency = request.form.get('proficiency',None)
+                lang_proficiency=request.form.get('lang_proficiency',None)
+                last_name = request.form.get('last_name',None)
+                address = request.form.get('address',None)
+                education_degree = request.form.get('education_degree',None)
+                field_of_study = request.form.get('field_of_study',None)
+                cv_range = request.form.get('cv_range',None)
+                num_users = db.session.query(User).count()
+                num_cvs = db.session.query(CV).count()
+                
+                if experience_title:
+                    query = query.filter(Experience.title.ilike(f"%{experience_title}%"))
+                if experience_location:
+                    query = query.filter(Experience.location.ilike(f"%{experience_location}%"))
+                if first_name:
+                    query = query.filter(PersonalInformation.Fname.ilike(f"%{first_name}%"))
+                if last_name:
+                    query = query.filter(PersonalInformation.Lname.ilike(f"%{last_name}%"))
+                if address:
+                    query = query.filter(PersonalInformation.Address.ilike(f"%{address}%"))
+                if education_degree:
+                    query = query.filter(Education.Degree==education_degree)
+                if field_of_study:
+                    query = query.filter(Education.FieldofStudy.ilike(f"%{field_of_study}%"))
+                if language:
+                    query = query.filter(Language.LangName==language)
+                if lang_proficiency:
+                    query = query.filter(Language.Proficiency_Lang==lang_proficiency)
+                if skill:
+                    query = query.filter(Skills.skill_name.ilike(f"%{skill}%"))
+                if proficiency:
+                    query = query.filter(Skills.proficiency.ilike(f"%{proficiency}%"))
+                if cv_range:
+                    if cv_range == '1-3':
+                # Filter for users with 1-3 CVs
+                        query = query.group_by(User).having(func.count(CV.Userid).between(1, 3))
+                    elif cv_range == '3-5':
+                # Filter for users with 3-5 CVs
+                        query = query.group_by(User).having(func.count(CV.Userid).between(3, 5))
+                    elif cv_range == '5+':
+                # Filter for users with more than 5 CVs
+                        query = query.group_by(User).having(func.count(CV.Userid) > 5)
+
+                unique_users = set()
+                
+                for user, personal_info, experience, language, skill in query.all():
+                    if user.Userid not in unique_users:
+                        filtered_results.append((user, personal_info, experience, language, skill))
+                        unique_users.add(user.Userid)
+
+            return render_template('admindash.html', results=filtered_results,num_users=num_users, num_cvs=num_cvs)
     return redirect(url_for("adminlogin"))
 
 
@@ -94,7 +158,7 @@ def adminregister():
             db.session.add(new_admin)
             db.session.commit()
             flash("Registration successful!", "success")
-            return redirect(url_for("Adminlogin"))
+            return redirect(url_for("adminlogin"))
     return render_template("adminregister.html", error=error)
 
 
@@ -150,7 +214,12 @@ def logout():
         session.pop("user_id", None)
         return render_template("logout_success.html")
 
-
+@app.route("/adminlogout", methods=["GET", "POST"])
+def adminlogout():
+    if request.method == "POST" or request.method == "GET":
+        session.pop("admin_id", None)
+        return render_template("logout_success.html")
+    
 @app.route("/logout/success")
 def logout_success():
     return render_template("logout_success.html")
@@ -894,154 +963,6 @@ def custom_query():
         answers.append((query_names[index], resRows))
     connection.close()
     return render_template("custom.html", data=answers)
-
-
-
-
-@app.route('/filter', methods=['GET', 'POST'])
-def filter_experience():
-    if request.method == 'POST':
-        query = db.session.query(User, Experience, PersonalInformation, Language, Skills).\
-                join(Experience, User.Userid == Experience.Userid).\
-                join(PersonalInformation, User.Userid == PersonalInformation.Userid).\
-                join(Language, User.Userid == Language.Userid).\
-                join(Skills, User.Userid == Skills.Userid)
-
-        experience_title = request.form.get('experience_title',None)
-        experience_location = request.form.get('experience_location',None)
-        first_name = request.form.get('first_name',None)
-        language = request.form.get('language',None)
-        skill = request.form.get('skill',None)
-        proficiency = request.form.get('proficiency',None)
-        lang_proficiency=request.form.get('lang_proficiency',None)
-        last_name = request.form.get('last_name',None)
-        address = request.form.get('address',None)
-        education_degree = request.form.get('education_degree',None)
-        field_of_study = request.form.get('field_of_study',None)
-        
-        if experience_title:
-            query = query.filter(Experience.title.ilike(f"%{experience_title}%"))
-        if experience_location:
-            query = query.filter(Experience.location.ilike(f"%{experience_location}%"))
-        if first_name:
-            query = query.filter(PersonalInformation.Fname.ilike(f"%{first_name}%"))
-        if last_name:
-            query = query.filter(PersonalInformation.Lname.ilike(f"%{last_name}%"))
-        if address:
-            query = query.filter(PersonalInformation.Address.ilike(f"%{address}%"))
-        if education_degree:
-            query = query.filter(Education.Degree==education_degree)
-        if field_of_study:
-            query = query.filter(Education.FieldofStudy.ilike(f"%{field_of_study}%"))
-        if language:
-            query = query.filter(Language.LangName==language)
-        if lang_proficiency:
-            query = query.filter(Language.Proficiency_Lang==lang_proficiency)
-        if skill:
-            query = query.filter(Skills.skill_name.ilike(f"%{skill}%"))
-        if proficiency:
-            query = query.filter(Skills.proficiency.ilike(f"%{proficiency}%"))
-
-        unique_users = set()
-        filtered_results = []
-        for user, personal_info, experience, language, skill in query.all():
-            if user.Userid not in unique_users:
-                filtered_results.append((user, personal_info, experience, language, skill))
-                unique_users.add(user.Userid)
-
-    return render_template('filters.html', results=filtered_results)
-
-
-
-
-@app.route('/apply_filters', methods=['GET','POST'])
-def apply_filters():
-    if request.method == 'POST':
-        # Retrieve filter criteria from the form
-        # completion_status = request.form.get('completionStatus')
-        personal_info = request.form.get('personalInfo')
-        # education = request.form.get('education')
-        # Add more filter criteria here if needed
-
-        # Construct the query based on the filter criteria
-        query = PersonalInformation.query
-
-        
-        if personal_info:
-            # Check if the personal_info field is valid
-            if personal_info in ['Fname', 'Lname', 'DOB', 'Address', 'Phn', 'LinkedIn']:
-                query = query.filter(getattr(PersonalInformation, personal_info) != None)
-            else:
-                # Handle invalid personal_info attribute
-                flash('Invalid personal information attribute selected.', 'error')
-
-
-        
-        # Add more filter conditions as needed
-
-        # Execute the query and retrieve the filtered data
-        filtered_data = query.all()
-
-        # Pass the filtered data to the template for display
-    return render_template("filtered_data.html", data=filtered_data)
-    # return render_template("filter.html")
-
-
-#query vansh
-@app.route('/get_personal_info_by_fname', methods=['POST'])
-def get_personal_info_by_fname():
-    if request.method == 'POST':
-        # Get the first name input from the HTML form
-        fname = request.form.get('fname')
-
-        # Execute the select query with the first name parameter
-        users_with_personal_info = (
-            db.session.query(
-                User,
-                CV.Title,
-                PersonalInformation.Fname,
-                PersonalInformation.Lname,
-                PersonalInformation.DOB,
-                PersonalInformation.Address,
-                PersonalInformation.Phn,
-                PersonalInformation.Email,
-                PersonalInformation.LinkedIn,
-                PersonalInformation.Summary,
-            )
-            .join(CV, User.Userid == CV.Userid)
-            .join(PersonalInformation, CV.CV_ID == PersonalInformation.CV_ID)
-            .filter(PersonalInformation.Fname == fname)  # Filter by Fname
-            .all()
-        )
-
-        # Process the results as needed
-        # You can return the results or perform further operations here
-        return render_template("filtered_data.html", data=users_with_personal_info)
-
-@app.route('/get_personal_info', methods=['POST'])
-def get_personal_info():
-    # Connect to the SQLite database
-    conn = sqlite3.connect('./instance/cvbuilder.db')
-    cursor = conn.cursor()
-
-    # Get the name input from the HTML form
-    fname = request.form.get('Fname')
-
-    # Execute the query with the name parameter
-    cursor.execute("SELECT Fname FROM PersonalInformation WHERE Fname = ?", (fname,))
-
-    # Fetch the result
-    result = cursor.fetchone()
-
-    # Close the database connection
-    conn.close()
-
-    # Return the result to the client
-    return render_template("filtered_data.html", fname=result[0] if result else "Name not found")
-
-@app.route('/filters')
-def filters():
-    return render_template('Filter.html')
 
 if __name__ == "__main__":
     with app.app_context():
