@@ -38,11 +38,12 @@ navigation">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#Demo">Demo</a>
+                        <a class="nav-link" href="#FAQ">FAQ</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#FAQ">FAQ</a>
-                  </li>
+                        <a class="nav-link" href="#Demo">Demo</a>
+                    </li>
+                    
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item signin">
@@ -116,13 +117,7 @@ YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="a
         <p><strong>Feedback and Review:</strong> Receive feedback from peers or experts on your CV to improve its effectiveness.</p>
 </section>
 
-<section id="Demo">
-    <h2>Demo video</h2>
-    <video controls>
-        <source src="\CV_builder\static\big_buck_bunny_720p_1mb" type="video/mp4">
-       
-    </video>
-</section> 
+
 
 <section id="FAQ">
     <h2>FAQ</h2>       
@@ -138,6 +133,12 @@ YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="a
         <h3>4. How can I share my CV with potential employers?</h3>
         <p>You can generate shareable links to your CV, making it easy to distribute electronically to potential employers. Additionally, you can download your CV in various formats (PDF, Word) or print it directly from the website.</p>
     
+</section>
+<section id="Demo">
+    <h2>Demo video</h2>
+    <video controls>
+        <source src="{{ url_for('static', filename='big_buck_bunny_720p_1mb.mp4') }}" type="video/mp4">
+    </video>
 </section>
 <footer class="footer-distributed">
 
