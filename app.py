@@ -964,6 +964,10 @@ def custom_query():
     connection.close()
     return render_template("custom.html", data=answers)
 
+@app.route('/sample')
+def sample():
+    return render_template("sample.html")
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()

@@ -68,7 +68,7 @@ button[type="submit"]:hover {
 
 .navbar{
     background-color: black !important; /* Dark navbar background */
-    padding: 5px 100px; /* Adjust padding to reduce width from both sides */
+    padding: 0px 100px; /* Adjust padding to reduce width from both sides */
     border: 2px solid white;
     border-radius: 30px; /* Decrease border-radius to decrease width from both corners */
     margin: 0 auto; /* Center the navbar */
@@ -108,5 +108,5 @@ button[type="submit"]:hover {
     margin-right: 20px; /* Add gap between navbar icons */
 }
 .navbar-nav .nav-link.Logout {
-    margin-left: auto; /* Shift the Logout icon to the right */
+    margin-top: auto; /* Shift the Logout icon to the right */
 }
